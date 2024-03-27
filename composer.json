@@ -1,0 +1,11 @@
+{
+    "name": "wprelay/paypal",
+    "autoload": {
+        "psr-4": {
+            "RelayWp\\Paypal\\": "src/"
+        }
+    },
+    "require": {
+        "paypal/paypal-payouts-sdk": "^1.0"
+    }
+}
