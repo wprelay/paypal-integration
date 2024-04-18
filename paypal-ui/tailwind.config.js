@@ -7,7 +7,7 @@ module.exports = {
         './app/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
     ],
-    prefix: "rwt-",
+    prefix: "wrp-",
     theme: {
         container: {
             center: true,

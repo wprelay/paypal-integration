@@ -1,0 +1,40 @@
+
+.relay-wp-nav-bar {
+
+  padding: 10px 10px 10px 10px;
+  background: #FFFFFF;
+  box-shadow: 0 6px 32px 0 #0D07190F;
+
+  .relay-wp-nav-link {
+
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+
+    & a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    &.active {
+      background: hsl(var(--primary));
+      color: #F5F5F6;
+    }
+
+    & svg {
+      fill: none;
+
+    }
+
+    &.active svg {
+      color: white;
+    }
+
+
+  }
+}

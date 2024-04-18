@@ -2,13 +2,11 @@
 
 namespace WPRelay\Paypal\App;
 
-use WPRelay\Paypal\App\Helpers\Functions;
 use WPRelay\Paypal\App\Helpers\PluginHelper;
 use WPRelay\Paypal\App\Helpers\WordpressHelper;
 use WPRelay\Paypal\App\Hooks\AdminHooks;
 use WPRelay\Paypal\App\Hooks\AssetsActions;
 use WPRelay\Paypal\App\Hooks\CustomHooks;
-use WPRelay\Paypal\App\Hooks\WooCommerceHooks;
 use WPRelay\Paypal\App\Hooks\WPHooks;
 use WPRelay\Paypal\App\Services\Request\Request;
 use WPRelay\Paypal\App\Services\Request\Response;
@@ -16,7 +14,7 @@ use WPRelay\Paypal\App\Services\Request\Response;
 class Route
 {
     //declare the below constants with unique reference for your plugin
-    const AJAX_NAME = 'wp_relay';
+    const AJAX_NAME = 'wp_relay_paypal';
     const AJAX_NO_PRIV_NAME = 'guest_apis';
 
     public static function register()
@@ -27,9 +25,9 @@ class Route
 
         AdminHooks::register();
         AssetsActions::register();
-        WooCommerceHooks::register();
         CustomHooks::register();
         WPHooks::register();
+
     }
 
     public static function handleAuthRequests()

@@ -101,13 +101,13 @@
  
 @layer base {
   * {
-    @apply rwt-border-border;
+    @apply wrp-border-border;
   }
   body {
-    @apply rwt-bg-background rwt-text-foreground;
+    @apply wrp-bg-background wrp-text-foreground;
   }
 }
-.rwt-__input{
+.wrp-__input{
   box-shadow: none !important;
 }
 

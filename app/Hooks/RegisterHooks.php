@@ -6,22 +6,11 @@ use WPRelay\Paypal\App\Helpers\PluginHelper;
 
 class RegisterHooks
 {
-    public static function registerCoreHooks($hookFile, $context = '')
+
+    public static function registerHooks($hookFile, $context = '')
     {
 
         $path = PluginHelper::pluginRoutePath();
-        $hooks = require("{$path}/{$hookFile}");
-
-        static::bindActions($hooks['store_front_hooks']['actions']);
-        static::bindActions($hooks['admin_hooks']['actions']);
-
-        static::bindFilters($hooks['store_front_hooks']['filters']);
-        static::bindFilters($hooks['admin_hooks']['filters']);
-    }
-
-    public static function registerProHooks($hookFile)
-    {
-        $path = PluginHelper::pluginRoutePath(true);
         $hooks = require("{$path}/{$hookFile}");
 
         static::bindActions($hooks['store_front_hooks']['actions']);

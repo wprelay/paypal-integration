@@ -6,6 +6,6 @@ class WPHooks extends RegisterHooks
 {
     public static function register()
     {
-        static::registerCoreHooks('wp-hooks.php');
+        static::registerHooks('wp-hooks.php');
     }
 }

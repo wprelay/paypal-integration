@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=HK+Grotesk:wght@400;500;600;700&display=swap");
+#wp-relay-paypal-main {
+    all: unset;
+    font-family: HK Grotesk, serif !important;
+}
+
+body {
+  }
+  *,
+  ::before,
+  ::after {
+    border-width: 0;
+  }
+  
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .btn-purple {
+        @apply px-4 py-1 text-sm text-purple-600 font-semibold border border-purple-200 rounded-full hover: text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2;
+    }
+}

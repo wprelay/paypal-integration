@@ -21,52 +21,66 @@ use RelayWp\Paypal\Paypal;
 
 defined('ABSPATH') or exit;
 
-defined('RWP_PAYPAL_PLUGIN_PATH') or define('RWP_PAYPAL_PLUGIN_PATH', plugin_dir_path(__FILE__));
-defined('RWP_PAYPAL_PLUGIN_FILE') or define('RWP_PAYPAL_PLUGIN_FILE', __FILE__);
-defined('RWP_PAYPAL_PLUGIN_NAME') or define('RWP_PAYPAL_PLUGIN_NAME', "WPRelay-Paypal");
-defined('RWP_PAYPAL_PLUGIN_SLUG') or define('RWP_PAYPAL_PLUGIN_SLUG', "WPRelay-Paypal");
-defined('RWP_PAYPAL_VERSION') or define('RWP_PAYPAL_VERSION', "0.0.1");
-defined('RWP_PAYPAL_PREFIX') or define('RWP_PAYPAL_PREFIX', "prefix_");
+defined('WPR_PAYPAL_PLUGIN_PATH') or define('WPR_PAYPAL_PLUGIN_PATH', plugin_dir_path(__FILE__));
+defined('WPR_PAYPAL_PLUGIN_URL') or define('WPR_PAYPAL_PLUGIN_URL', plugin_dir_url(__FILE__));
+defined('WPR_PAYPAL_PLUGIN_FILE') or define('WPR_PAYPAL_PLUGIN_FILE', __FILE__);
+defined('WPR_PAYPAL_PLUGIN_NAME') or define('WPR_PAYPAL_PLUGIN_NAME', "WPRelay-Paypal");
+defined('WPR_PAYPAL_PLUGIN_SLUG') or define('WPR_PAYPAL_PLUGIN_SLUG', "WPRelay-Paypal");
+defined('WPR_PAYPAL_VERSION') or define('WPR_PAYPAL_VERSION', "0.0.1");
+defined('WPR_PAYPAL_PREFIX') or define('WPR_PAYPAL_PREFIX', "prefix_");
 
-defined('RWP_PAYPAL_SANDBOX_URL') or define('RWP_PAYPAL_SANDBOX_URL', "https://api-m.sandbox.paypal.com");
-defined('RWP_PAYPAL_LIVE_URL') or define('RWP_PAYPAL_LIVE_URL', "https://api-m.paypal.com");
+defined('WPR_PAYPAL_SANDBOX_URL') or define('WPR_PAYPAL_SANDBOX_URL', "https://api-m.sandbox.paypal.com");
+defined('WPR_PAYPAL_LIVE_URL') or define('WPR_PAYPAL_LIVE_URL', "https://api-m.paypal.com");
 
 /**
  * Required PHP Version
  */
-if (!defined('RWP_PAYPAL_REQUIRED_PHP_VERSION')) {
-    define('RWP_PAYPAL_REQUIRED_PHP_VERSION', 7.2);
+if (!defined('WPR_PAYPAL_REQUIRED_PHP_VERSION')) {
+    define('WPR_PAYPAL_REQUIRED_PHP_VERSION', 7.2);
 }
 
 $php_version = phpversion();
 
-if (version_compare($php_version, RWP_PAYPAL_REQUIRED_PHP_VERSION) > 1) {
-    error_log("Minimum PHP Version Required Is " . RWP_PAYPAL_REQUIRED_PHP_VERSION);
+if (version_compare($php_version, WPR_PAYPAL_REQUIRED_PHP_VERSION) > 1) {
+    error_log("Minimum PHP Version Required Is " . WPR_PAYPAL_REQUIRED_PHP_VERSION);
     return;
 }
 
-if (file_exists(RWP_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php')) {
-    require RWP_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php';
+if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php')) {
+    require WPR_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php';
 } else {
     error_log('Vendor directory is not found');
     return;
 }
 
-add_action('admin_menu', function () {
-    add_menu_page(
-        esc_html__(RWP_PAYPAL_PLUGIN_NAME, 'wprelay-paypal'),
-        esc_html__(RWP_PAYPAL_PLUGIN_NAME, 'wprelay-paypal'),
-        'manage_options',
-        'paypal',
-        'render_paypal_settings_page',
-        'dashicons-money',
-        56
-    );
-});
+if (class_exists('WPRelay\Paypal\App\App')) {
+    //If the Directory Exists it means it's a pro pack;
+    //Check Whether it is PRO USER
+
+    $app = \WPRelay\Paypal\App\App::make();
+
+    $app->bootstrap(); // to load the plugin
+} else {
+//    wp_die('Plugin is unable to find the App class.');
+    return;
+}
+
+add_action('admin_head', function () {
+    $page = !empty($_GET['page']) ? $_GET['page'] : '';
+    if (in_array($page, array('wp-relay'))) {
+        ?>
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                self = window;
+            });
+        </script>
+        <?php
+    }
+}, 11);
 
 function render_paypal_settings_page()
 {
-    $file = RWP_PAYPAL_PLUGIN_PATH . 'admin.php';
+    $file = WPR_PAYPAL_PLUGIN_PATH . 'admin.php';
     $data = get_option('wp_relay_paypal_settings', "{}");
 
 
@@ -76,14 +90,13 @@ function render_paypal_settings_page()
         extract($data);
         include $file;
         echo ob_get_clean();
+    } else {
+        error_log('file not exists');
     }
-     else {
-         error_log('file not exists');
-     }
     return false;
 }
 
-add_action('wp_ajax_save_paypal_details', function() {
+add_action('wp_ajax_save_paypal_details', function () {
     try {
 
         $nonce = isset($_POST['_wp_relay_paypal_nonce']) ? sanitize_text_field($_POST['_wp_relay_paypal_nonce']) : '';
@@ -130,7 +143,7 @@ add_action('wp_ajax_save_paypal_details', function() {
         } else {
             wp_send_json_error(['message' => 'Invalid Request', 401]);
         }
-    } catch(Error $error) {
+    } catch (Error $error) {
         wp_send_json_error(['message' => 'Server Error Occurred'], 500);
     }
 });

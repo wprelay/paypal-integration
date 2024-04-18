@@ -2,6 +2,7 @@
 
 namespace WPRelay\Paypal\App\Services;
 
+use WPRelay\Paypal\App\App;
 use WPRelay\Paypal\App\Helpers\Functions;
 class View
 {
@@ -17,7 +18,7 @@ class View
 
     public function view($path, $data, $print = true)
     {
-        $file = RWP_PLUGIN_PATH. 'resources/' . $path . '.php';
+        $file = WPR_PAYPAL_PLUGIN_PATH. 'resources/' . $path . '.php';
         return Functions::renderTemplate($file, $data);
     }
 }

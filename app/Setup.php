@@ -2,6 +2,8 @@
 
 namespace WPRelay\Paypal\App;
 
+use WPRelay\Paypal\Src\Models\Model;
+
 class Setup
 {
     /**
@@ -9,9 +11,9 @@ class Setup
      */
     public static function init()
     {
-        register_activation_hook(RWP_PLUGIN_FILE, [__CLASS__, 'activate']);
-        register_deactivation_hook(RWP_PLUGIN_FILE, [__CLASS__, 'deactivate']);
-        register_uninstall_hook(RWP_PLUGIN_FILE, [__CLASS__, 'uninstall']);
+        register_activation_hook(WPR_PAYPAL_PLUGIN_FILE, [__CLASS__, 'activate']);
+        register_deactivation_hook(WPR_PAYPAL_PLUGIN_FILE, [__CLASS__, 'deactivate']);
+        register_uninstall_hook(WPR_PAYPAL_PLUGIN_FILE, [__CLASS__, 'uninstall']);
 
         add_action('plugins_loaded', [__CLASS__, 'maybeRunMigration']);
     }
@@ -45,9 +47,9 @@ class Setup
      */
     public static function maybeRunMigration()
     {
-        $current_version = get_option('rwp_current_version', 0);
+        $current_version = get_option('wpr_paypal_current_version', 0);
 
-        if (version_compare(RWP_VERSION, $current_version) > 0) {
+        if (version_compare(WPR_PAYPAL_VERSION, $current_version) > 0) {
             if (!is_admin()) {
                 return;
             }
@@ -55,7 +57,7 @@ class Setup
             static::runMigration();
             error_log("Running migration due to version change");
 
-            update_option('rwp_current_version', RWP_VERSION);
+            update_option('wpr_paypal_current_version', WPR_PAYPAL_VERSION);
         }
     }
 
