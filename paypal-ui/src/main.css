@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+
+
+    --toastify-color-light: #fff;
+    --toastify-color-dark: #121212;
+    --toastify-color-info: #3498db;
+    --toastify-color-success: hsl(var(--primary));
+    --toastify-color-warning: #f1c40f;
+    --toastify-color-error: hsl(var(--destructive));
+    --toastify-color-transparent: hsla(0, 0%, 100%, .7);
+    --toastify-icon-color-info: var(--toastify-color-info);
+    --toastify-icon-color-success: var(--toastify-color-success);
+    --toastify-icon-color-warning: var(--toastify-color-warning);
+    --toastify-icon-color-error: var(--toastify-color-error);
+    --toastify-toast-width: 320px;
+    --toastify-toast-background: #fff;
+    --toastify-toast-min-height: 64px;
+    --toastify-toast-max-height: 800px;
+    --toastify-font-family: sans-serif;
+    --toastify-z-index: 9999;
+    --toastify-text-color-light: #757575;
+    --toastify-text-color-dark: #fff;
+    --toastify-text-color-info: #fff;
+    --toastify-text-color-success: #fff;
+    --toastify-text-color-warning: #fff;
+    --toastify-text-color-error: #fff;
+    --toastify-spinner-color: #616161;
+    --toastify-spinner-color-empty-area: #e0e0e0;
+    --toastify-color-progress-light: linear-gradient(90deg, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
+    --toastify-color-progress-dark: #bb86fc;
+    --toastify-color-progress-info: var(--toastify-color-info);
+    --toastify-color-progress-success: var(--toastify-color-success);
+    --toastify-color-progress-warning: var(--toastify-color-warning);
+    --toastify-color-progress-error: var(--toastify-color-error)
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply rwt-border-border;
+  }
+  body {
+    @apply rwt-bg-background rwt-text-foreground;
+  }
+}
+.rwt-__input{
+  box-shadow: none !important;
+}
+
+.css-t3ipsp-control {
+  box-shadow: 0 0 1px hsl(var(--primary))  !important;
+  border-color: hsl(var(--primary)) !important;
+}
+.css-t3ipsp-control:hover {
+  box-shadow: 0 0 1px hsl(var(--primary))  !important;
+  border-color: hsl(var(--primary)) !important;
+}
+.css-13cymwt-control{
+  border-color: hsl(var(--primary)) !important;
+
+}
+.css-13cymwt-control:focus-visible{
+  outline: 2px transparent solid;
+  outline-offset: 2px;
+}
+.relay-wp-app-header .css-1nmdiq5-menu {
+  z-index: 9999;
+}
+.css-1nmdiq5-menu{
+  margin: 0 !important;
+  background-color: white !important;
+   visibility: visible !important;
+}
+
+.tabs-trigger[data-state="active"]{
+  color: hsl(var(--secondary)) !important;
+  background-color: hsl(var(--primary)) !important;
+}
+.css-qbdosj-Input input:focus{
+  box-shadow: none;
+}
+
+.Toastify__toast-container--top-right {
+  top: 2rem;
+  right: 1em;
+}

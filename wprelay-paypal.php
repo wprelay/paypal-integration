@@ -7,8 +7,7 @@
  * Version:              0.0.1
  * Requires at least:    5.9
  * Requires PHP:         7.3
- * Author:               WPRelay
- * Author URI:           https://www.wprelay.com
+ * Author:               WPRelay * Author URI:           https://www.wprelay.com
  * Text Domain:          flycart.org
  * Domain Path:          /i18n/languages
  * License:              GPL v3 or later
@@ -24,10 +23,13 @@ defined('ABSPATH') or exit;
 
 defined('RWP_PAYPAL_PLUGIN_PATH') or define('RWP_PAYPAL_PLUGIN_PATH', plugin_dir_path(__FILE__));
 defined('RWP_PAYPAL_PLUGIN_FILE') or define('RWP_PAYPAL_PLUGIN_FILE', __FILE__);
-defined('RWP_PAYPAL_PLUGIN_NAME') or define('RWP_PAYPAL_PLUGIN_NAME', "Paypal");
-defined('RWP_PAYPAL_PLUGIN_SLUG') or define('RWP_PAYPAL_PLUGIN_SLUG', "Paypal");
+defined('RWP_PAYPAL_PLUGIN_NAME') or define('RWP_PAYPAL_PLUGIN_NAME', "WPRelay-Paypal");
+defined('RWP_PAYPAL_PLUGIN_SLUG') or define('RWP_PAYPAL_PLUGIN_SLUG', "WPRelay-Paypal");
 defined('RWP_PAYPAL_VERSION') or define('RWP_PAYPAL_VERSION', "0.0.1");
 defined('RWP_PAYPAL_PREFIX') or define('RWP_PAYPAL_PREFIX', "prefix_");
+
+defined('RWP_PAYPAL_SANDBOX_URL') or define('RWP_PAYPAL_SANDBOX_URL', "https://api-m.sandbox.paypal.com");
+defined('RWP_PAYPAL_LIVE_URL') or define('RWP_PAYPAL_LIVE_URL', "https://api-m.paypal.com");
 
 /**
  * Required PHP Version
@@ -50,4 +52,87 @@ if (file_exists(RWP_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php')) {
     return;
 }
 
-add_filter('rwp_payment_process_sources', [Paypal::class, 'addPaypalPayment'], 10, 2);
+add_action('admin_menu', function () {
+    add_menu_page(
+        esc_html__(RWP_PAYPAL_PLUGIN_NAME, 'wprelay-paypal'),
+        esc_html__(RWP_PAYPAL_PLUGIN_NAME, 'wprelay-paypal'),
+        'manage_options',
+        'paypal',
+        'render_paypal_settings_page',
+        'dashicons-money',
+        56
+    );
+});
+
+function render_paypal_settings_page()
+{
+    $file = RWP_PAYPAL_PLUGIN_PATH . 'admin.php';
+    $data = get_option('wp_relay_paypal_settings', "{}");
+
+
+    if (file_exists($file)) {
+        $data = json_decode($data, true);
+        ob_start();
+        extract($data);
+        include $file;
+        echo ob_get_clean();
+    }
+     else {
+         error_log('file not exists');
+     }
+    return false;
+}
+
+add_action('wp_ajax_save_paypal_details', function() {
+    try {
+
+        $nonce = isset($_POST['_wp_relay_paypal_nonce']) ? sanitize_text_field($_POST['_wp_relay_paypal_nonce']) : '';
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($nonce) && wp_verify_nonce($nonce, '_wprelay_papal_nonce')) {
+            $client_id = $_POST['client_id'];
+            $client_secret = $_POST['client_secret'];
+            $payment_type = $_POST['payment_type'];
+            $account_type = $_POST['account_type'];
+
+            $errors = [];
+
+            if (empty($client_id)) {
+                $errors['client_id'] = ['Client Id is Required'];
+            }
+
+            if (empty($client_secret)) {
+                $errors['client_secret'] = ['Client Secret is Required'];
+            }
+
+            if (empty($payment_type)) {
+                $errors['payment_type'] = ['Payment Type is Required'];
+            }
+
+            if (empty($account_type)) {
+                $errors['account_type'] = ['Account Type is Required'];
+            }
+
+            if (!empty($errors)) {
+                wp_send_json_error($errors, 422);
+            }
+
+            $data['client_id'] = $client_id;
+            $data['client_secret'] = $client_secret;
+            $data['payment_type'] = $payment_type;
+
+            $data = json_encode($data);
+
+            update_option('wp_relay_paypal_settings', $data);
+
+            wp_send_json_success([
+                'message' => 'WPRelay Paypal Settings Saved Successfully'
+            ]);
+
+        } else {
+            wp_send_json_error(['message' => 'Invalid Request', 401]);
+        }
+    } catch(Error $error) {
+        wp_send_json_error(['message' => 'Server Error Occurred'], 500);
+    }
+});
+
+//add_filter('rwp_payment_process_sources', [Paypal::class, 'addPaypalPayment'], 10, 2);
