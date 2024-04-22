@@ -1,9 +1,8 @@
 <?php
 
-namespace RelayWp\Paypal;
+namespace WPRelay\Paypal\Src;
 
 use RelayWp\Affiliate\Core\Payments\RWPPayment;
-
 
 class Paypal extends RWPPayment
 {
@@ -28,14 +27,10 @@ class Paypal extends RWPPayment
      * @param $payout
      * @return void
      */
-    public function process($payout)
+    public function process($payout_ids)
     {
-        $status = true;
-        $this->payout = $payout;
-
-
-
-        $status ? $this->paymentSucceeded([]) : $this->paymentFailed([]);
-
+        foreach($payout_ids as $payout_id) {
+            true ? $this->paymentSucceeded($payout_id, []) : $this->paymentFailed($payout_id, []);
+        }
     }
 }

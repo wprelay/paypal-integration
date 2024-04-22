@@ -2,10 +2,7 @@
 
 namespace WPRelay\Paypal\App;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Helpers\WordpressHelper;
-use WPRelay\Paypal\App\Hooks\AssetsActions;
-use WPRelay\Paypal\App\Services\Settings;
+use WPRelay\Paypal\App\Setup;
 
 class App extends Container
 {

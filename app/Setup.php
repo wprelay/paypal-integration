@@ -2,7 +2,7 @@
 
 namespace WPRelay\Paypal\App;
 
-use WPRelay\Paypal\Src\Models\Model;
+use WPRelay\Paypal\Src\Src\Models\Model;
 
 class Setup
 {

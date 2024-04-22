@@ -28,6 +28,7 @@ class Route
         CustomHooks::register();
         WPHooks::register();
 
+        error_log('Registered route');
     }
 
     public static function handleAuthRequests()

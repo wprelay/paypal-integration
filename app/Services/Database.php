@@ -5,7 +5,7 @@ namespace WPRelay\Paypal\App\Services;
 use WPRelay\Paypal\App\Exception\ModelNotFoundException;
 use WPRelay\Paypal\App\Traits\Conditionable;
 use WPRelay\Paypal\App\Traits\useScopes;
-use WPRelay\Paypal\Core\Models\Model;
+use WPRelay\Paypal\Src\Core\Models\Model;
 
 class Database
 {

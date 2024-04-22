@@ -3,7 +3,7 @@
 namespace WPRelay\Paypal\App\Hooks;
 
 use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\Src\Controllers\Admin\PageController;
+use WPRelay\Paypal\Src\Src\Controllers\Admin\PageController;
 
 class AdminHooks extends RegisterHooks
 {
