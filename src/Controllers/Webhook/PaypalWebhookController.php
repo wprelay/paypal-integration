@@ -8,6 +8,7 @@ use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
 use WPRelay\Paypal\Src\Models\WebhookEvent;
 use RelayWp\Affiliate\Core\Models\Payout;
+use RelayWp\Affiliate\Core\Models\Transaction;
 
 class PaypalWebhookController
 {
@@ -28,8 +29,6 @@ class PaypalWebhookController
     public static function handleWebhook()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        error_log('web hook called');
-        error_log(print_r($data, true));
 
         static::createWebhookEntry($data);
 
@@ -53,6 +52,7 @@ class PaypalWebhookController
             case 'PAYMENT.PAYOUTS-ITEM.BLOCKED':
             case 'PAYMENT.PAYOUTS-ITEM.REFUNDED':
             case 'PAYMENT.PAYOUTS-ITEM.RETURNED':
+            case 'PAYMENT.PAYOUTS-ITEM.UNCLAIMED':
                 static::payoutItemFailed($data['resource']);
                 break;
         }
@@ -73,7 +73,7 @@ class PaypalWebhookController
         $payout_batch_id = $resource['payout_batch_id'];
 
         $batch_payout_item = BatchPayoutItem::query()
-            ->where("sender_batch_id = %s", [$sender_item_id])
+            ->where("sender_item_id = %s", [$sender_item_id])
             ->first();
 
         if (!empty($batch_payout_item)) {
@@ -109,7 +109,7 @@ class PaypalWebhookController
         $payout_batch_id = $resource['payout_batch_id'];
 
         $batch_payout_item = BatchPayoutItem::query()
-            ->where("sender_batch_id = %s", [$sender_item_id])
+            ->where("sender_item_id = %s", [$sender_item_id])
             ->first();
 
         if (!empty($batch_payout_item)) {
@@ -143,8 +143,6 @@ class PaypalWebhookController
                 ]);
 
                 Payout::query()->update([
-                    'revert_reason' => 'Payout Failed via Paypal',
-                    'deleted_at' => Functions::currentUTCTime(),
                     'status' => 'failed'
                 ], ['id' => $relay_payout_id]);
             }
@@ -183,7 +181,7 @@ class PaypalWebhookController
             ->first();
 
         if (!empty($batch)) {
-            $batch_status = $resource['status'];
+            $batch_status = $batch_header['batch_status'];
             $funding_source = $batch_header['funding_source'];
             $payout_batch_id = $batch_header['payout_batch_id'];
             $fees = json_encode($batch_header['fees']);

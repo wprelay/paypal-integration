@@ -37,6 +37,7 @@ class Paypal extends RWPPayment
     {
 
         $ids = implode("','", $payout_ids);
+
         $memberTable = Member::getTableName();
         $affiliateTable = Affiliate::getTableName();
         $payoutTable = Payout::getTableName();
@@ -79,17 +80,10 @@ class Paypal extends RWPPayment
 
                     ]);
 
-                    Payout::update([
-                        'revert_reason' => 'Payout Failed via Paypal',
-                        'deleted_at' => Functions::currentUTCTime(),
-                        'status' => 'failed'
-                    ], [
-                        'id' => $payout->id
-                    ]);
+                    Payout::update(['status' => 'failed'], ['id' => $payout->id]);
                 }
             }
 
         }
-        error_log('processing payout');
     }
 }

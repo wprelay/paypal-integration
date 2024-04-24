@@ -58,8 +58,6 @@ class Setup
             }
 
             static::runMigration();
-            error_log("Running migration due to version change");
-
             update_option('wpr_paypal_current_version', WPR_PAYPAL_VERSION);
         }
     }

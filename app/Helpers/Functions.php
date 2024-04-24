@@ -13,7 +13,6 @@ class Functions
 
     public static function renderTemplate($file, $data = [])
     {
-        error_log($file);
         if (file_exists($file)) {
             ob_start();
             extract($data);

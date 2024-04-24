@@ -26,11 +26,7 @@ class AssetsActions
 
     public static function addAdminPluginAssets($hook)
     {
-        global $page_now;
-        error_log($page_now);
         if (strpos($hook, 'wprelay-paypal') !== false) {
-
-            error_log('enqueued');
             $reactDistUrl = PluginHelper::getReactAssetURL();
             $resourceUrl = PluginHelper::getResourceURL();
 

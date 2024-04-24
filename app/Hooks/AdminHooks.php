@@ -33,8 +33,6 @@ class AdminHooks extends RegisterHooks
             'dashicons-money',
             56
         );
-
-        error_log('menu added');
     }
 
 }

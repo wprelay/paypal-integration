@@ -85,7 +85,7 @@ class PayPalClient
 
         $last_batch_id = BatchPayout::query()->lastInsertedId();
         foreach ($affiliate_data as $pending_payment) {
-            $item_id = substr(md5(time()), 0, 12);
+            $item_id = substr(md5(uniqid(mt_rand(), true)), 0, 12);
             $items[] = $item = [
                 "receiver" => $pending_payment['affiliate_email'],
                 "amount" => [
