@@ -2,7 +2,10 @@
 
 namespace WPRelay\Paypal\App;
 
-use WPRelay\Paypal\Src\Src\Models\Model;
+use WPRelay\Paypal\Src\Models\BatchPayout;
+use WPRelay\Paypal\Src\Models\BatchPayoutItem;
+use WPRelay\Paypal\Src\Models\Model;
+use WPRelay\Paypal\Src\Models\WebhookEvent;
 
 class Setup
 {
@@ -84,7 +87,9 @@ class Setup
     public static function getModels(): array
     {
         return [
-
+            BatchPayout::class,
+            BatchPayoutItem::class,
+            WebhookEvent::class,
         ];
     }
 }
