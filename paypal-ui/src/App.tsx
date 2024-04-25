@@ -30,7 +30,7 @@ const App: FC = (props) => {
                     to="/payouts">
                     <i className='rwp rwp-dashboard  lg:wrp-text-xl  md:wrp-text-4.5 wrp-text-4.5'></i>
                     <span
-                        className='wrp-ml-2 xl:wrp-text-4 lg:wrp-text-3.5 wrp-text-xs wrp-flex wrp-items-center'>Payouts</span>
+                        className='wrp-ml-2 xl:wrp-text-4 lg:wrp-text-3.5 wrp-text-xs wrp-flex wrp-items-center'>Payout Items</span>
                 </NavLink>
             </nav>
         </div>
