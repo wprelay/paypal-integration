@@ -3,6 +3,8 @@
 namespace WPRelay\Paypal\App\Resources;
 
 
+use WPRelay\Paypal\App\Services\Request\Response;
+
 class Collection
 {
 

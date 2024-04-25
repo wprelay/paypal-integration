@@ -35,6 +35,7 @@ class PluginHelper
         // If an exception object is provided, append its details to the log message
         if (($exception instanceof Exception) || ($exception instanceof \Error)) {
             $log_message .= "\nTrace Details: " . $exception->getTraceAsString();
+            $log_message .= "\nActual Message: " . $exception->getMessage();
         }
 
         // Log the error message to the WordPress error log

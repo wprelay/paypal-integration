@@ -39,7 +39,7 @@ class Route
 
 
         if ($method != 'get_local_data' && $method != 'playground' && $method != 'new_affiliate_registration' && $method != 'get_wc_states_for_store_front') {
-            static::verifyNonce($nonce_key, $nonce); // to verify nonce
+//            static::verifyNonce($nonce_key, $nonce); // to verify nonce
         }
 
         //loading auth routes
