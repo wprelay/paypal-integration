@@ -32,7 +32,7 @@ class AssetsActions
 
             wp_enqueue_style('wp-relay-paypal-plugin-styles', "{$reactDistUrl}/main.css", [], WPR_PAYPAL_VERSION);
             wp_enqueue_script('wp-relay-paypal-plugin-script', "{$reactDistUrl}/main.bundle.js", array('wp-element'), WPR_PAYPAL_VERSION, true);
-            wp_enqueue_style('wp-relay-paypal-plugin-styles-font-awesome', "{$resourceUrl}/admin/css/rwp-fonts.css", [], WPR_PAYPAL_VERSION);
+            wp_enqueue_style('wp-relay-paypal-plugin-styles-font-awesome', "{$resourceUrl}/admin/css/wpr-fonts.css", [], WPR_PAYPAL_VERSION);
             remove_all_actions('admin_notices');
         }
     }

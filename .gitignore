@@ -1,3 +1,5 @@
 /vendor
 /.idea
 /paypal-ui/.idea
+/paypal-ui/node_modules
+/paypal-ui/dist
