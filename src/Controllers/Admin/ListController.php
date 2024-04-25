@@ -14,7 +14,6 @@ class ListController
 
     public static function batchPayoutItemList(Request $request)
     {
-
         try {
             $perPage = $request->get('per_page') ? $request->get('per_page') : 10;
             $currentPage = $request->get('current_page') ? $request->get('current_page'): 1;
