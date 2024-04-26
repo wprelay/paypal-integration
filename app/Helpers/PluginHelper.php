@@ -46,7 +46,7 @@ class PluginHelper
 
     public static function getAdminDashboard()
     {
-        $name = WPR_PAYPAL_PLUGIN_NAME;
+        $name = WPR_PAYPAL_MAIN_PAGE;
         return admin_url("admin.php?page={$name}#/");
     }
 
