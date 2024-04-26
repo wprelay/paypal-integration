@@ -48,10 +48,12 @@ export const BatchPayoutItem = () => {
                 method: 'paypal_batch_item_list',
                 _wp_nonce_key: 'wpr_paypal_nonce',
                 _wp_nonce: localState?.nonces?.wpr_paypal_nonce,
+                search:search,
+                per_page:perPage,
+                current_page:currentPage
             },
 
         }).then((response) => {
-            console.log(response)
             setPayoutItems(response.data.data)
         }).catch(response => {
             toastrError('Error Occurred')
@@ -62,7 +64,7 @@ export const BatchPayoutItem = () => {
 
     React.useEffect(() => {
         getItems();
-    }, [])
+    }, [currentPage,perPage])
 
     return <div className='wrp-py-2'>
         <div className='wrp-flex wrp-justify-between wrp-my-4 wrp-mx-5'>
