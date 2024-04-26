@@ -54,7 +54,6 @@ export const BatchPayoutItem = () => {
             },
 
         }).then((response) => {
-            console.log(response)
             setPayoutItems(response.data.data)
         }).catch(response => {
             toastrError('Error Occurred')

@@ -44,7 +44,38 @@ export const Settings = () => {
     const saveSettings = (e: any) => {
         e.preventDefault();
         setSaveChangesLoading(true)
-        setErrors({})
+        if(settings.payment_via=="standard_payout") {
+            setErrors({})
+            if (settings.client_id == '') {
+                setErrors((prevErrors:any)=>({...prevErrors, client_id: ['Client ID is required']}))
+            }
+            if (settings.client_secret == '') {
+                setErrors((prevErrors:any)=>({...prevErrors, client_secret: ['Client Secret key is required']}))
+            }
+            if(settings.client_id =="" || settings.client_secret==""){
+                setSaveChangesLoading(false)
+                return;
+            }
+        }
+        if(settings.payment_via=="mass_payment") {
+            setErrors({})
+            if (settings.username == '') {
+                setErrors((prevErrors:any)=>({...prevErrors, username: ['Username is required']}))
+            }
+            if (settings.password == '') {
+                setErrors((prevErrors:any)=>({...prevErrors, password: ['Password is required']}))
+            }
+            if (settings.signature == '') {
+                setErrors((prevErrors:any)=>({...prevErrors, signature: ['Signature is required']}))
+            }
+            if (settings.subject == '') {
+                setErrors((prevErrors:any)=>({...prevErrors, subject: ['Subject is required']}))
+            }
+            if(settings.username =="" || settings.password=="" || settings.signature=="" || settings.subject==""){
+                setSaveChangesLoading(false)
+                return;
+            }
+        }
         axiosClient.post(`?action=${localState.ajax_name}`, {
             method: 'save_paypal_settings',
             _wp_nonce_key: 'wpr_paypal_nonce',
@@ -67,13 +98,17 @@ export const Settings = () => {
         })
 
     }
+    useEffect(() => {
+        console.log(errors)
+        console.log(settings)
+    }, [errors]);
 
     useEffect(() => {
         setLoading(true)
         let queryParams: any = {
-            method: 'get_general_settings',
-            _wp_nonce_key: 'wpr_settings_nonce',
-            _wp_nonce: localState?.nonces?.dashboard_nonce,
+            method: 'get_paypal_settings',
+            _wp_nonce_key: 'wpr_paypal_nonce',
+            _wp_nonce: localState?.nonces?.wpr_paypal_nonce,
         };
 
         const query = '?' + new URLSearchParams(queryParams).toString();
@@ -142,7 +177,6 @@ export const Settings = () => {
                                         </Select>
                                     </div>
                                 </div>
-                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
                             </div>
                         </div>
                         {
@@ -169,7 +203,7 @@ export const Settings = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
+                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.client_id ? errors.client_id[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -194,7 +228,7 @@ export const Settings = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
+                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.client_secret ? errors.client_secret[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +260,7 @@ export const Settings = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
+                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.username ? errors.username[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -252,7 +286,7 @@ export const Settings = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
+                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.password ? errors.password[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -278,7 +312,7 @@ export const Settings = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
+                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.signature ? errors.signature[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -304,7 +338,7 @@ export const Settings = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.cookie_duration ? errors.cookie_duration[0] : ''}</p>
+                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.subject ? errors.subject[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
