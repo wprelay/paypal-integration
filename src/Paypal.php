@@ -9,6 +9,7 @@ use RelayWp\Affiliate\Core\Payments\RWPPayment;
 use RelayWp\Affiliate\Core\Models\Payout;
 use RelayWp\Affiliate\Core\Models\Transaction;
 use WPRelay\Paypal\App\Helpers\Functions;
+use WPRelay\Paypal\App\Helpers\PluginHelper;
 
 class Paypal extends RWPPayment
 {
@@ -25,7 +26,11 @@ class Paypal extends RWPPayment
     {
         return [
             'name' => 'Paypal',
-            'value' => 'paypal'
+            'value' => 'paypal',
+            'label' => 'Paypal Payment',
+            'description' => 'Process Payouts for your affiliates through Paypal',
+            'note' => 'You will need a Business Account with Paypal. You will also need to get approval from Paypal Merchant Support Team to add Payouts API feature to your Paypal Account.',
+            'target_url' => PluginHelper::getAdminDashboard(),
         ];
     }
 
@@ -35,7 +40,15 @@ class Paypal extends RWPPayment
      */
     public function process($payout_ids)
     {
+        if (\ActionScheduler::is_initialized()) {
+            as_schedule_single_action(strtotime("now"), 'wpr_process_paypal_payouts', [$payout_ids]);
+        } else {
+            error_log('ActionScheduler not initialized so Unable to process Payouts Via Paypal');
+        }
+    }
 
+    public static function sendPayments($payout_ids)
+    {
         $ids = implode("','", $payout_ids);
 
         $memberTable = Member::getTableName();
@@ -52,8 +65,8 @@ class Paypal extends RWPPayment
 
         $data = [];
 
-        foreach($payouts as $payout) {
-            if(in_array($payout->id, $payout_ids)) {
+        foreach ($payouts as $payout) {
+            if (in_array($payout->id, $payout_ids)) {
                 $data[] = [
                     'affiliate_email' => $payout->affiliate_email,
                     'commission_amount' => $payout->amount,
@@ -66,17 +79,17 @@ class Paypal extends RWPPayment
 
         $status = PayPalClient::processPayout($data);
 
-        if(empty($status)) {
-            foreach($payouts as $payout) {
-                if(in_array($payout->id, $payout_ids)) {
+        if (empty($status)) {
+            foreach ($payouts as $payout) {
+                if (in_array($payout->id, $payout_ids)) {
                     Transaction::create([
-                            'affiliate_id' => $payout->affiliate_id,
-                            'type' => Transaction::CREDIT,
-                            'currency' => $payout->currency,
-                            'amount' => $payout->amount,
-                            'transactionable_id' => $payout->id,
-                            'transactionable_type' => 'payout',
-                            'system_note' => "Payout Failed #{$payout->id} so Refunded",
+                        'affiliate_id' => $payout->affiliate_id,
+                        'type' => Transaction::CREDIT,
+                        'currency' => $payout->currency,
+                        'amount' => $payout->amount,
+                        'transactionable_id' => $payout->id,
+                        'transactionable_type' => 'payout',
+                        'system_note' => "Payout Failed #{$payout->id} so Refunded",
 
                     ]);
 

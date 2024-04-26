@@ -31,7 +31,6 @@ class SettingsController
 
     public static function saveSettings(Request $request)
     {
-
         try {
             $client_id = $request->get('paypal_client_id');
             $client_secret = $request->get('paypal_client_secret');

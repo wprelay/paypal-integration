@@ -4,9 +4,10 @@ use WPRelay\Paypal\Src\Paypal;
 
 $store_front_hooks = [
     'actions' => [
+        'wpr_process_paypal_payouts' => ['callable' => [Paypal::class, 'sendPayments'], 'priority' => 11, 'accepted_args' => 1],
     ],
     'filters' => [
-        'rwp_payment_process_sources' => ['callable' => [Paypal::class, 'addPaypalPayment'], 'priority' => 10, 'accepted_args' => 4],
+        'rwp_payment_process_sources' => ['callable' => [Paypal::class, 'addPaypalPayment'], 'priority' => 11, 'accepted_args' => 4],
     ]
 ];
 

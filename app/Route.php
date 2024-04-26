@@ -19,7 +19,6 @@ class Route
 
     public static function register()
     {
-
         add_action('wp_ajax_nopriv_' . static::AJAX_NO_PRIV_NAME, [__CLASS__, 'handleGuestRequests']);
         add_action('wp_ajax_' . static::AJAX_NAME, [__CLASS__, 'handleAuthRequests']);
 

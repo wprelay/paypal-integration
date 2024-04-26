@@ -1,9 +1,11 @@
 <?php
 
 namespace WPRelay\Paypal\App\Helpers;
+
 use Exception;
 
 defined('ABSPATH') or exit;
+
 class PluginHelper
 {
     public static function pluginRoutePath($pro = false)
@@ -40,6 +42,12 @@ class PluginHelper
 
         // Log the error message to the WordPress error log
         error_log($log_message);
+    }
+
+    public static function getAdminDashboard()
+    {
+        $name = WPR_PAYPAL_PLUGIN_NAME;
+        return admin_url("admin.php?page={$name}#/");
     }
 
 }
