@@ -12,6 +12,7 @@ import {Label} from "../components/ui/label";
 import {Input} from "../components/ui/input"
 import {SelectTrigger, Select, SelectItem, SelectContent, SelectValue} from "../components/ui/select";
 import {handleFields} from "../components/helpers/utils";
+import {Popover, PopoverContent, PopoverTrigger} from "@radix-ui/react-popover";
 
 
 export const Settings = () => {
@@ -19,7 +20,7 @@ export const Settings = () => {
     const [saveChangesLoading, setSaveChangesLoading] = useState(false)
     const {localState} = useLocalState()
     const [errors, setErrors] = useState<any>()
-
+    const [urlCopied, setUrlCopied] = useState<boolean>(false)
     const paymentOptions = [
         {
             label: "Standard Payout",
@@ -98,10 +99,23 @@ export const Settings = () => {
         })
 
     }
-    useEffect(() => {
-        console.log(errors)
-        console.log(settings)
-    }, [errors]);
+
+    const copyReferralURL = async (e: any) => {
+        // @ts-ignore
+        if ('clipboard' in navigator) {
+            // @ts-ignore
+            await navigator.clipboard.writeText(affiliate.url);
+        } else {
+            // @ts-ignore
+            document.execCommand('copy', true, affiliate.url);
+        }
+
+        setUrlCopied(true);
+
+        setTimeout(() => {
+            setUrlCopied(false)
+        }, 2000)
+    }
 
     useEffect(() => {
         setLoading(true)
@@ -232,18 +246,49 @@ export const Settings = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="wrp-w-full wrp-flex wrp-flex-col">
+                                        <div
+                                            className="wrp-flex wrp-flex-row wrp-py-10 wrp-border-b-1 wrp-rounded wrp-px-6 ">
+                                            <div className="wrp-flex-1 wrp-flex wrp-flex-col wrp-gap-2">
+                                                <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Webhook Configuration</h3>
+                                            </div>
+                                            <div className="wrp-flex-1 wrp-flex-row wrp-gap-1">
+                                                <div
+                                                    className='wrp-flex wrp-justify-start wrp-gap-2 wrp-w-full'>
+                                                    <div>
+                                                        <span>Copy this</span>
+                                                    </div>
+                                                    <Popover>
+                                                        <PopoverTrigger className='wrp-flex '>
+                                                            <i onClick={() => {
+                                                                copyReferralURL("text")
+                                                            }}
+                                                               className='wpr wpr-copy lg:wrp-text-lg wrp-text-4 wrp-cursor-pointer'></i>
+                                                        </PopoverTrigger>
+                                                        <PopoverContent align='start'
+                                                                        className='!wrp-w-20 wrp-flex !wrp-h-10 wrp-duration-500  '>
+                                                            <p className='wrp-flex wrp-justify-center wrp-items-center'>Copied</p>
+                                                        </PopoverContent>
+                                                    </Popover>
+                                                </div>
+                                                <p className="!wrp-text-sm wrp-pt-1.5">note : Lorem
+                                                    ipsum dolor sit amet,</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </>
                             )
                         }
                         {
-                            settings.payment_via=="mass_payment" && (
+                            settings.payment_via == "mass_payment" && (
                                 <>
                                     <div className="wrp-w-full wrp-flex wrp-flex-col">
                                         <div
                                             className="wrp-flex wrp-flex-row wrp-py-10 wrp-border-b-1 wrp-rounded wrp-px-6 ">
                                             <div className="wrp-flex-1 wrp-flex wrp-flex-col wrp-gap-2">
                                                 <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Username</h3>
-                                                <p className='wrp-text-sm wrp-text-grayprimary'>Specify the API username associated with your account</p>
+                                                <p className='wrp-text-sm wrp-text-grayprimary'>Specify the API username
+                                                    associated with your account</p>
                                             </div>
                                             <div className="wrp-flex-1 wrp-flex-row wrp-gap-1">
                                                 <div
