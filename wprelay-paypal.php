@@ -53,6 +53,20 @@ if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php')) {
     return;
 }
 
+if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/packages/merchant-sdk-php/vendor/autoload.php')) {
+    require WPR_PAYPAL_PLUGIN_PATH . '/packages/merchant-sdk-php/vendor/autoload.php';
+} else {
+    error_log('Merchant SDK PHP Vendor directory is not found');
+    return;
+}
+
+if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/packages/paypal-sdk-core-php-main/vendor/autoload.php')) {
+    require WPR_PAYPAL_PLUGIN_PATH . '/packages/paypal-sdk-core-php-main/vendor/autoload.php';
+} else {
+    error_log('PAYPAL SDK CORE PHP MAIN - Vendor directory is not found');
+    return;
+}
+
 if (!function_exists('wpr_check_is_wp_relay_pro_installed')) {
     function wpr_check_is_wp_relay_pro_installed()
     {
@@ -115,3 +129,22 @@ function add_wprelay_not_installed_notice() {
     printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
 }
 
+
+add_action('init', function() {
+    error_log('action registered');
+  if(isset($_GET['mass_pay'])) {
+      error_log('mass pay query param is set');
+     $massPayment = new \WPRelay\Paypal\Src\Services\MassPay() ;
+
+     error_log('mass payment object created');
+
+     return $massPayment->pay();
+
+  }
+});
+
+
+/**
+ *Paypal Packages
+ * https://github.com/smashgg/paypal-sdk-core-php
+ */

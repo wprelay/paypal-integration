@@ -12,7 +12,7 @@ use RelayWp\Affiliate\Core\Models\Transaction;
 
 class PaypalWebhookController
 {
-    public static function handlePaypalWebhook()
+    public static function registerRoutes()
     {
         register_rest_route(
             'webhook/v1',
@@ -24,6 +24,20 @@ class PaypalWebhookController
                 ),
             )
         );
+
+        register_rest_route(
+            'ipn/notifications',
+            '/paypal',
+            array(
+                array(
+                    'methods' => 'POST',
+                    'callback' => [__CLASS__, 'handleIPNNotifications'],
+                ),
+            )
+        );
+
+        error_log('Rest route registered');
+
     }
 
     public static function handleWebhook()
@@ -60,6 +74,16 @@ class PaypalWebhookController
         Response::success([
             'message' => 'webhook handled'
         ]);
+    }
+
+    public static function handleIPNNotifications()
+    {
+        $dataString = file_get_contents('php://input');
+
+        parse_str($dataString,$data);
+
+        error_log('Printing IPN Notifications messages');
+        error_log(print_r($data, true));
     }
 
     public static function payoutItemSucceeded($resource)
