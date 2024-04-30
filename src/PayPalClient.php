@@ -5,6 +5,7 @@ namespace WPRelay\Paypal\Src;
 use PaypalPayoutsSDK\Core\PayPalHttpClient;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;
 use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
+use WPRelay\Paypal\App\Helpers\Functions;
 use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
 
@@ -85,7 +86,7 @@ class PayPalClient
 
         $last_batch_id = BatchPayout::query()->lastInsertedId();
         foreach ($affiliate_data as $pending_payment) {
-            $item_id = substr(md5(uniqid(mt_rand(), true)), 0, 12);
+            $item_id = Functions::getUniqueId();
             $items[] = $item = [
                 "receiver" => $pending_payment['affiliate_email'],
                 "amount" => [

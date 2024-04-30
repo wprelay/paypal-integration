@@ -58,4 +58,9 @@ class Functions
 
         return $array;
     }
+
+    public static function getUniqueId($length = 12)
+    {
+        return substr(md5(uniqid(mt_rand(), true)), 0, $length);
+    }
 }
