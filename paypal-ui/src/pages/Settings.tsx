@@ -141,7 +141,6 @@ export const Settings = () => {
         fetchSettings();
     }, []);
 
-    console.log(settings)
     return <div className='wrp-py-2'>
         <div className='wrp-flex wrp-justify-between wrp-gap-3 wrp-items-center wrp-m-4'>
             <div>
