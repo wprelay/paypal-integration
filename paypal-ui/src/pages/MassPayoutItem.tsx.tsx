@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import {Card} from "../components/ui/card";
-import {axiosClient} from "../components/axios";
-import {toastrError} from "../ToastHelper";
-import {useLocalState} from "../zustand/localState";
+import React, { useState } from "react";
+import { Card } from "../components/ui/card";
+import { axiosClient } from "../components/axios";
+import { toastrError } from "../ToastHelper";
+import { useLocalState } from "../zustand/localState";
 import Select from 'react-select';
 import useInputSearch from "../components/customHooks/useInputSearch";
 import InputSearch from "../components/helpers/InputSearch";
-import {PayoutsEmpty} from "../components/PayoutItems/PayoutsEmpty";
-import {Pagination} from "../components/General/Pagination";
-import {ClipLoader} from "react-spinners";
+import { PayoutsEmpty } from "../components/PayoutItems/PayoutsEmpty";
+import { Pagination } from "../components/General/Pagination";
+import { ClipLoader } from "react-spinners";
 import usePaginationHook from "../components/customHooks/usePaginationHook";
-import {override} from "../data/overrride";
-import {PaginationTypes} from "../components/types/PaginationTypes";
-import {Badge} from "../components/ui/badge";
+import { override } from "../data/overrride";
+import { PaginationTypes } from "../components/types/PaginationTypes";
+import { Badge } from "../components/ui/badge";
 
 type payoutItemEachEntryProp = {
     receiver_email: string,
@@ -31,10 +31,10 @@ type payoutItemProps = PaginationTypes & {
 
 export const MassPayoutItem = () => {
     const [payoutItems, setPayoutItems] = useState<null | payoutItemProps>(null)
-    const {localState} = useLocalState();
+    const { localState } = useLocalState();
     const [loading, setLoading] = useState<boolean>(false)
     const [statusFilter, setStatusFilter] = useState<{ label: string, value: string }[]>([]);
-    const {search, setSearch, searched, setIsSearched} = useInputSearch()
+    const { search, setSearch, searched, setIsSearched } = useInputSearch()
     const {
         handlePagination, updatePerPage,
         selectedLimit, perPage, currentPage
@@ -68,31 +68,31 @@ export const MassPayoutItem = () => {
         <div className='wrp-flex wrp-justify-between wrp-my-4 wrp-mx-5'>
             <div
                 className='wrp-flex wrp-justify-between lg:wrp-gap-8 wrp-items-center md:wrp-gap-8 wrp-gap-4'>
-                    <span className='wrp-flex wrp-gap-2 wrp-items-center  '>
-                        <span
-                            className='lg:wrp-text-xl md:wrp-text-lg wrp-text-sm wrp-text-primary wrp-font-bold'>Payout Items</span>
-                    </span>
+                <span className='wrp-flex wrp-gap-2 wrp-items-center  '>
+                    <span
+                        className='lg:wrp-text-xl md:wrp-text-lg wrp-text-sm wrp-text-primary wrp-font-bold'>Payout Items</span>
+                </span>
             </div>
         </div>
         {!loading ? (<div className="wrp-bg-white wrp-h-full wrp-rounded-2xl wrp-p-4">
             <div className="wrp-flex wrp-flex-row wrp-justify-between wrp-items-center search-section wrp-py-2">
                 <div>
                     <Select className="xl:wrp-min-w-350px"
-                            placeholder='Filter by status' isMulti={true} styles={{
-                        option: (styles, {data, isDisabled, isFocused, isSelected}) => {
-                            return {
-                                ...styles,
-                                backgroundColor: isFocused ? "hsl(var(--primary))" : "hsl(var(--secondary))",
-                                color: isFocused ? "hsl(var(--secondary))" : "hsl(var(--primary))"
-                            };
-                        }
-                    }}
-                            classNamePrefix="wrp-"
-                            onChange={(selectedOption: any) => {
-                                setStatusFilter(selectedOption)
-                            }}
+                        placeholder='Filter by status' isMulti={true} styles={{
+                            option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+                                return {
+                                    ...styles,
+                                    backgroundColor: isFocused ? "hsl(var(--primary))" : "hsl(var(--secondary))",
+                                    color: isFocused ? "hsl(var(--secondary))" : "hsl(var(--primary))"
+                                };
+                            }
+                        }}
+                        classNamePrefix="wrp-"
+                        onChange={(selectedOption: any) => {
+                            setStatusFilter(selectedOption)
+                        }}
                         // options={[...OrderStatuses.successful, ...OrderStatuses.failure]}
-                            defaultValue={statusFilter.length > 0 ? statusFilter : ''}
+                        defaultValue={statusFilter.length > 0 ? statusFilter : ''}
                     ></Select>
                 </div>
                 <InputSearch search={search} setSearch={setSearch} onclick={getItems}></InputSearch>
@@ -113,7 +113,7 @@ export const MassPayoutItem = () => {
 
                         </div>
                     </div>
-                ) : !searched && payoutItems?.mass_payout_items?.length == 0 ? <PayoutsEmpty/> : (
+                ) : !searched && payoutItems?.mass_payout_items?.length == 0 ? <PayoutsEmpty /> : (
                     <>
                         <div className="wrp-h-full">
                             <div className='wrp-flex wrp-flex-col wrp-gap-4'>
@@ -141,7 +141,7 @@ export const MassPayoutItem = () => {
                                             return (
 
                                                 <Card key={index}
-                                                      className='wrp-flex wrp-justify-between wrp-p-4 !wrp-shadow-md wrp-h-18 wrp-items-center'>
+                                                    className='wrp-flex wrp-justify-between wrp-p-4 !wrp-shadow-md wrp-h-18 wrp-items-center'>
                                                     <div
                                                         className="wrp-text-primary xl:wrp-text-sm wrp-font-bold lg:wrp-text-xs md:wrp-text-2.5  wrp-text-2.5 wrp-w-1/4 ">#{payout.receiver_email}</div>
                                                     <div
@@ -161,9 +161,9 @@ export const MassPayoutItem = () => {
                             <div className='wrp-flex wrp-justify-end wrp-items-center wrp-my-4'>
                                 <div className="pagination">
                                     <Pagination handlePageClick={handlePagination} updatePerPage={updatePerPage}
-                                                selectedLimit={selectedLimit} pageCount={payoutItems?.total_pages || 1}
-                                                limit={payoutItems?.per_page || 5} loading={false}
-                                                forcePage={currentPage - 1}/>
+                                        selectedLimit={selectedLimit} pageCount={payoutItems?.total_pages || 1}
+                                        limit={payoutItems?.per_page || 5} loading={false}
+                                        forcePage={currentPage - 1} />
                                 </div>
                             </div>
 
@@ -172,7 +172,7 @@ export const MassPayoutItem = () => {
                 )
             }
         </div>) : (<div className="wrp-h-[65vh] rwr-w-full wrp-flex">
-            <ClipLoader className="wrp-text-primary" cssOverride={override}/>
+            <ClipLoader className="wrp-text-primary" cssOverride={override} />
         </div>)}
     </div>
 }
