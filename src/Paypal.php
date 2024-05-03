@@ -10,6 +10,8 @@ use RelayWp\Affiliate\Core\Models\Payout;
 use RelayWp\Affiliate\Core\Models\Transaction;
 use WPRelay\Paypal\App\Helpers\Functions;
 use WPRelay\Paypal\App\Helpers\PluginHelper;
+use WPRelay\Paypal\App\Services\Settings;
+use WPRelay\Paypal\Src\Services\MassPay;
 
 class Paypal extends RWPPayment
 {
@@ -49,6 +51,8 @@ class Paypal extends RWPPayment
 
     public static function sendPayments($payout_ids)
     {
+        error_log('incoming processing payouts triggered from cron');
+
         $ids = implode("','", $payout_ids);
 
         $memberTable = Member::getTableName();
@@ -57,7 +61,7 @@ class Paypal extends RWPPayment
 
 
         $payouts = Payout::query()
-            ->select("{$payoutTable}.*, {$memberTable}.email as affiliate_email")
+            ->select("{$payoutTable}.*, {$memberTable}.email as affiliate_email, {$affiliateTable}.payment_email as paypal_email")
             ->leftJoin($affiliateTable, "$affiliateTable.id = $payoutTable.affiliate_id")
             ->leftJoin($memberTable, "$memberTable.id = $affiliateTable.member_id")
             ->where("{$payoutTable}.id in ('" . $ids . "')")
@@ -68,7 +72,7 @@ class Paypal extends RWPPayment
         foreach ($payouts as $payout) {
             if (in_array($payout->id, $payout_ids)) {
                 $data[] = [
-                    'affiliate_email' => $payout->affiliate_email,
+                    'affiliate_email' => $payout->paypal_email,
                     'commission_amount' => $payout->amount,
                     'currency' => $payout->currency,
                     'affiliate_id' => $payout->affiliate_id,
@@ -77,7 +81,17 @@ class Paypal extends RWPPayment
             }
         }
 
-        $status = PayPalClient::processPayout($data);
+        $payment_via = Settings::get('paypal_settings.payment_via');
+
+        if($payment_via == 'latest') {
+            $status = PayPalClient::processPayout($data);
+        } else if($payment_via == 'legacy') {
+            error_log('processing using legacy api');
+            $status = MassPay::processPayout($data);
+        } else {
+            $status = false;
+        }
+
 
         if (empty($status)) {
             foreach ($payouts as $payout) {

@@ -2,20 +2,17 @@
 
 namespace WPRelay\Paypal\Src\Services;
 
+use WPRelay\Paypal\App\Services\Settings;
+
 class Configuration
 {
 
     public static function getConfig()
     {
+        $mode =
         $config = array(
-            // values: 'sandbox' for testing
-            //		   'live' for production
-            //         'tls' for testing if your server supports TLSv1.2
-            "mode" => "sandbox",
-            // TLSv1.2 Check: Comment the above line, and switch the mode to tls as shown below
-            // "mode" => "tls"
 
-            'log.LogEnabled' => true,
+            'log.LogEnabled' => false,
             'log.FileName' => '../PayPal.log',
             'log.LogLevel' => 'FINE'
 
@@ -29,11 +26,27 @@ class Configuration
     // Creates a configuration array containing credentials and other required configuration parameters.
     public static function getAcctAndConfig()
     {
+
+
+        $paypalSettings = Settings::get('paypal_settings');
+
+        $userName = $paypalSettings['user_name'] ?? '';
+        $mode = $paypalSettings['sandbox_mode'] ?? true;
+        $password = $paypalSettings['password'] ?? '';
+        $signature = $paypalSettings['signature'] ?? '';
+
         $config = array(
             // Signature Credential
-            "acct1.UserName" => "sb-4aqlq29883972_api1.business.example.com",
-            "acct1.Password" => "BF22P95N7W6AM8S3",
-            "acct1.Signature" => "AF9VR7ZXR4iSsKgl1AQlasp-euxyA2K1dz81sCFIaZPVfOxDx-lX1UpV",
+            "acct1.UserName" => $userName,
+            "acct1.Password" => $password,
+            "acct1.Signature" => $signature,
+            // values: 'sandbox' for testing
+            //		   'live' for production
+            //         'tls' for testing if your server supports TLSv1.2
+            "mode" => $mode,
+            // TLSv1.2 Check: Comment the above line, and switch the mode to tls as shown below
+            // "mode" => "tls"
+
             // Subject is optional and is required only in case of third party authorization
             // "acct1.Subject" => "",
 

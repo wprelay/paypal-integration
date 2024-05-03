@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {Card, CardContent, CardHeader, CardTitle} from "../components/ui/card";
+import React, {useEffect, useState} from "react";
+import {Card, CardContent} from "../components/ui/card";
 import {Button} from "../components/ui/button";
 import {ClipLoader} from "react-spinners";
 import {override} from "../data/overrride";
@@ -8,9 +8,8 @@ import {axiosClient} from "../components/axios";
 import {toastrError, toastrSuccess} from "../ToastHelper";
 import {UNPROCESSABLE} from "../data/StatusCodes";
 import {settingsType} from "../components/types/settingsType";
-import {Label} from "../components/ui/label";
 import {Input} from "../components/ui/input"
-import {SelectTrigger, Select, SelectItem, SelectContent, SelectValue} from "../components/ui/select";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../components/ui/select";
 import {handleFields} from "../components/helpers/utils";
 import {Popover, PopoverContent, PopoverTrigger} from "@radix-ui/react-popover";
 
@@ -23,56 +22,53 @@ export const Settings = () => {
     const [urlCopied, setUrlCopied] = useState<boolean>(false)
     const paymentOptions = [
         {
-            label: "Standard Payout",
-            value: 'standard_payout'
+            label: "Payouts REST API (Latest)",
+            value: 'latest'
         },
         {
-            label: "Mass Payment (Legacy)",
-            value: 'mass_payment'
+            label: "Legacy API (SOAP)",
+            value: 'legacy'
         }
     ]
 
     const [settings, setSettings] = useState<settingsType>({
-        payment_via: "standard_payout",
+        payment_via: "latest",
         client_id: '',
         client_secret: '',
         username: '',
         password: '',
         signature: '',
-        subject: '',
     });
 
     const saveSettings = (e: any) => {
         e.preventDefault();
         setSaveChangesLoading(true)
-        if(settings.payment_via=="standard_payout") {
+        if (settings.payment_via == "latest") {
             setErrors({})
             if (settings.client_id == '') {
-                setErrors((prevErrors:any)=>({...prevErrors, client_id: ['Client ID is required']}))
+                setErrors((prevErrors: any) => ({...prevErrors, client_id: ['Client ID is required']}))
             }
             if (settings.client_secret == '') {
-                setErrors((prevErrors:any)=>({...prevErrors, client_secret: ['Client Secret key is required']}))
+                setErrors((prevErrors: any) => ({...prevErrors, client_secret: ['Client Secret key is required']}))
             }
-            if(settings.client_id =="" || settings.client_secret==""){
+            if (settings.client_id == "" || settings.client_secret == "") {
                 setSaveChangesLoading(false)
                 return;
             }
         }
-        if(settings.payment_via=="mass_payment") {
+        if (settings.payment_via == "legacy") {
             setErrors({})
             if (settings.username == '') {
-                setErrors((prevErrors:any)=>({...prevErrors, username: ['Username is required']}))
+                setErrors((prevErrors: any) => ({...prevErrors, username: ['Username is required']}))
             }
             if (settings.password == '') {
-                setErrors((prevErrors:any)=>({...prevErrors, password: ['Password is required']}))
+                setErrors((prevErrors: any) => ({...prevErrors, password: ['Password is required']}))
             }
             if (settings.signature == '') {
-                setErrors((prevErrors:any)=>({...prevErrors, signature: ['Signature is required']}))
+                setErrors((prevErrors: any) => ({...prevErrors, signature: ['Signature is required']}))
             }
-            if (settings.subject == '') {
-                setErrors((prevErrors:any)=>({...prevErrors, subject: ['Subject is required']}))
-            }
-            if(settings.username =="" || settings.password=="" || settings.signature=="" || settings.subject==""){
+
+            if (settings.username == "" || settings.password == "" || settings.signature == "") {
                 setSaveChangesLoading(false)
                 return;
             }
@@ -117,9 +113,10 @@ export const Settings = () => {
         }, 2000)
     }
 
-    useEffect(() => {
+    const fetchSettings = () => {
         setLoading(true)
         let queryParams: any = {
+            action: localState.ajax_name,
             method: 'get_paypal_settings',
             _wp_nonce_key: 'wpr_paypal_nonce',
             _wp_nonce: localState?.nonces?.wpr_paypal_nonce,
@@ -128,13 +125,18 @@ export const Settings = () => {
         const query = '?' + new URLSearchParams(queryParams).toString();
 
         axiosClient.get(`${query}`).then((response) => {
-            let settings = response?.data?.data
-            setSettings((prevSettings: any) => ({...prevSettings, settings}))
+            let data = response?.data?.data
+            console.log(data)
+            setSettings(data)
         }).catch((error) => {
             toastrError('Error Occurred While Fetching General Settings');
         }).finally(() => {
             setLoading(false);
         })
+    }
+
+    useEffect(() => {
+        fetchSettings();
     }, []);
 
     return <div className='wrp-py-2'>
@@ -194,7 +196,7 @@ export const Settings = () => {
                             </div>
                         </div>
                         {
-                            settings.payment_via=="standard_payout" && (
+                            settings.payment_via == "latest" && (
                                 <>
                                     <div className="wrp-w-full wrp-flex wrp-flex-col">
                                         <div
@@ -206,14 +208,14 @@ export const Settings = () => {
                                                 <div
                                                     className='wrp-flex wrp-flex-col wrp-justify-start wrp-gap-2 wrp-w-full'>
                                                     <div className="wrp-flex wrp-justify-start wrp-gap-0 wrp-w-full">
-                                                        <Input id="client_id"
-                                                               type="text"
-                                                               className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
-                                                               defaultValue={settings.client_id}
-                                                               placeholder="Client ID"
-                                                               onChange={(e: any) => {
-                                                                   setSettings({...handleFields(settings, e.target.value, 'client_id')});
-                                                               }}
+                                                        <Input
+                                                            type="text"
+                                                            className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
+                                                            defaultValue={settings.client_id}
+                                                            placeholder="Client ID"
+                                                            onChange={(e: any) => {
+                                                                setSettings({...handleFields(settings, e.target.value, 'client_id')});
+                                                            }}
                                                         />
                                                     </div>
                                                 </div>
@@ -250,7 +252,8 @@ export const Settings = () => {
                                         <div
                                             className="wrp-flex wrp-flex-row wrp-py-10 wrp-border-b-1 wrp-rounded wrp-px-6 ">
                                             <div className="wrp-flex-1 wrp-flex wrp-flex-col wrp-gap-2">
-                                                <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Webhook Configuration</h3>
+                                                <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Webhook
+                                                    Configuration</h3>
                                             </div>
                                             <div className="wrp-flex-1 wrp-flex-row wrp-gap-1">
                                                 <div
@@ -280,7 +283,7 @@ export const Settings = () => {
                             )
                         }
                         {
-                            settings.payment_via == "mass_payment" && (
+                            settings.payment_via == "legacy" && (
                                 <>
                                     <div className="wrp-w-full wrp-flex wrp-flex-col">
                                         <div
@@ -314,7 +317,8 @@ export const Settings = () => {
                                             className="wrp-flex wrp-flex-row wrp-py-10 wrp-border-b-1 wrp-rounded wrp-px-6 ">
                                             <div className="wrp-flex-1 wrp-flex wrp-flex-col wrp-gap-2">
                                                 <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Password</h3>
-                                                <p className='wrp-text-sm wrp-text-grayprimary'>Specify the password associated with the API user name</p>
+                                                <p className='wrp-text-sm wrp-text-grayprimary'>Specify the password
+                                                    associated with the API user name</p>
                                             </div>
                                             <div className="wrp-flex-1 wrp-flex-row wrp-gap-1">
                                                 <div
@@ -340,7 +344,9 @@ export const Settings = () => {
                                             className="wrp-flex wrp-flex-row wrp-py-10 wrp-border-b-1 wrp-rounded wrp-px-6 ">
                                             <div className="wrp-flex-1 wrp-flex wrp-flex-col wrp-gap-2">
                                                 <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Signature</h3>
-                                                <p className='wrp-text-sm wrp-text-grayprimary'>If you are using an API signature and not an API certificate, specify the API signature associated with the API username</p>
+                                                <p className='wrp-text-sm wrp-text-grayprimary'>If you are using an API
+                                                    signature and not an API certificate, specify the API signature
+                                                    associated with the API username</p>
                                             </div>
                                             <div className="wrp-flex-1 wrp-flex-row wrp-gap-1">
                                                 <div
@@ -358,32 +364,6 @@ export const Settings = () => {
                                                     </div>
                                                 </div>
                                                 <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.signature ? errors.signature[0] : ''}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="wrp-w-full wrp-flex wrp-flex-col">
-                                        <div
-                                            className="wrp-flex wrp-flex-row wrp-py-10 wrp-border-b-1 wrp-rounded wrp-px-6 ">
-                                            <div className="wrp-flex-1 wrp-flex wrp-flex-col wrp-gap-2">
-                                                <h3 className='wrp-text-4 wrp-font-bold wrp-leading-5'>Subject</h3>
-                                                <p className='wrp-text-sm wrp-text-grayprimary'>If you're calling the API on behalf of a third-party merchant, you must specify the email address on file with PayPal of the third-party merchant or the merchant's account ID (sometimes called Payer ID)</p>
-                                            </div>
-                                            <div className="wrp-flex-1 wrp-flex-row wrp-gap-1">
-                                                <div
-                                                    className='wrp-flex wrp-flex-col wrp-justify-start wrp-gap-2 wrp-w-full'>
-                                                    <div className="wrp-flex wrp-justify-start wrp-gap-0 wrp-w-full">
-                                                        <Input id="subject"
-                                                               type="text"
-                                                               className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
-                                                               defaultValue={settings?.subject}
-                                                               placeholder="Subject"
-                                                               onChange={(e: any) => {
-                                                                   setSettings({...handleFields(settings, e.target.value, 'subject')});
-                                                               }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <p className=" wrp-text-xs wrp-text-destructive wrp-pt-1.5">{errors?.subject ? errors.subject[0] : ''}</p>
                                             </div>
                                         </div>
                                     </div>
