@@ -50,4 +50,10 @@ class PluginHelper
         return admin_url("admin.php?page={$name}#/");
     }
 
+    public static function getPayoutIdWithUniqueId($payout_id)
+    {
+        $unique_id = Functions::getUniqueId();
+        return "pid-{$payout_id}-$unique_id";
+    }
+
 }

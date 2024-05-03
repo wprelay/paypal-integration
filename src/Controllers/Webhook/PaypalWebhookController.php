@@ -6,6 +6,7 @@ use WPRelay\Paypal\App\Helpers\Functions;
 use WPRelay\Paypal\App\Services\Request\Response;
 use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
+use WPRelay\Paypal\Src\Models\MassPayout;
 use WPRelay\Paypal\Src\Models\WebhookEvent;
 use RelayWp\Affiliate\Core\Models\Payout;
 use RelayWp\Affiliate\Core\Models\Transaction;
@@ -80,7 +81,53 @@ class PaypalWebhookController
     {
         $dataString = file_get_contents('php://input');
 
-        parse_str($dataString,$data);
+        parse_str($dataString, $data);
+
+        if (!isset($data['txn_type']) || $data['txn_type'] != 'masspay') {
+            return;
+        }
+
+        $iteration = 1;
+
+        while (isset($data["masspay_txn_id_{$iteration}"])) {
+            $transaction_id = $data["masspay_txn_id_{$iteration}"];
+            $receiver_email = $data["receiver_email_{$iteration}"];
+            $payment_fee = $data["payment_fee_{$iteration}"];
+            $status = $data["status_{$iteration}"];
+            $mc_gross = $data["mc_gross_{$iteration}"];
+            $payment_gross = $data["payment_gross_{$iteration}"];
+            $mc_currency = $data["mc_currency_{$iteration}"];
+            $unique_id = $data["unique_id_{$iteration}"];
+            $ipn_track_id = $data["ipn_track_id"];
+            $payment_date = $data["payment_date"];
+
+            //update in DB
+
+            $massPayoutEntry = MassPayout::query()->where("unique_id = %s", [$unique_id])->first();
+
+            if (!empty($massPayoutEntry)) {
+                $relay_payout_id = $massPayoutEntry->payout_id;
+
+                MassPayout::query()->update([
+                    'masspay_txn_id' => $transaction_id,
+                    'receiver_email' => $receiver_email,
+                    'payment_fee' => $payment_fee,
+                    'status' => $status,
+                    'mc_gross' => $mc_gross,
+                    'payment_gross' => $payment_gross,
+                    'mc_currency' => $mc_currency,
+                    'ipn_track_id' => $ipn_track_id,
+                    'payment_date' => $payment_date,
+                ], ['id' => $massPayoutEntry->id]);
+
+                //if status is changed update the entry in our DB.
+                if (strtolower($status) == 'completed') {
+                    do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
+                }
+            }
+
+            $iteration++;
+        }
 
         error_log('Printing IPN Notifications messages');
         error_log(print_r($data, true));
@@ -114,9 +161,7 @@ class PaypalWebhookController
 
             $relay_payout_id = $batch_payout_item->affiliate_payout_id;
 
-            Payout::query()->update([
-                'status' => strtolower($status)
-            ], ['id' => $relay_payout_id]);
+            do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
         }
 
 
@@ -166,9 +211,7 @@ class PaypalWebhookController
 
                 ]);
 
-                Payout::query()->update([
-                    'status' => 'failed'
-                ], ['id' => $relay_payout_id]);
+                do_action('rwp_payment_mark_as_failed', $relay_payout_id, []);
             }
         }
     }

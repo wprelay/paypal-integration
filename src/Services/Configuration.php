@@ -2,6 +2,8 @@
 
 namespace WPRelay\Paypal\Src\Services;
 
+use WPRelay\Paypal\App\Services\Settings;
+
 class Configuration
 {
 
@@ -15,7 +17,7 @@ class Configuration
             // TLSv1.2 Check: Comment the above line, and switch the mode to tls as shown below
             // "mode" => "tls"
 
-            'log.LogEnabled' => true,
+            'log.LogEnabled' => false,
             'log.FileName' => '../PayPal.log',
             'log.LogLevel' => 'FINE'
 
@@ -29,11 +31,20 @@ class Configuration
     // Creates a configuration array containing credentials and other required configuration parameters.
     public static function getAcctAndConfig()
     {
+
+
+        $settings = Settings::get('paypal_settings');
+
+        $paypalSettings = $settings['paypal_settings'];
+        $userName = $paypalSettings['username'] ?? '';
+        $password = $paypalSettings['password'] ?? '';
+        $signature = $paypalSettings['signature'] ?? '';
+
         $config = array(
             // Signature Credential
-            "acct1.UserName" => "sb-4aqlq29883972_api1.business.example.com",
-            "acct1.Password" => "BF22P95N7W6AM8S3",
-            "acct1.Signature" => "AF9VR7ZXR4iSsKgl1AQlasp-euxyA2K1dz81sCFIaZPVfOxDx-lX1UpV",
+            "acct1.UserName" => $userName,
+            "acct1.Password" => $password,
+            "acct1.Signature" => $signature,
             // Subject is optional and is required only in case of third party authorization
             // "acct1.Subject" => "",
 

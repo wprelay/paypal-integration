@@ -4,7 +4,7 @@
 /**
  * Plugin Name:          Paypal - WP Relay
  * Description:          Payment GateWay for WP-Relay
- * Version:              0.0.4
+ * Version:              0.0.6
  * Requires at least:    5.9
  * Requires PHP:         7.3
  * Author:               WPRelay * Author URI:           https://www.wprelay.com
@@ -24,7 +24,7 @@ defined('WPR_PAYPAL_PLUGIN_URL') or define('WPR_PAYPAL_PLUGIN_URL', plugin_dir_u
 defined('WPR_PAYPAL_PLUGIN_FILE') or define('WPR_PAYPAL_PLUGIN_FILE', __FILE__);
 defined('WPR_PAYPAL_PLUGIN_NAME') or define('WPR_PAYPAL_PLUGIN_NAME', "WPRelay-Paypal");
 defined('WPR_PAYPAL_PLUGIN_SLUG') or define('WPR_PAYPAL_PLUGIN_SLUG', "WPRelay-Paypal");
-defined('WPR_PAYPAL_VERSION') or define('WPR_PAYPAL_VERSION', "0.0.4");
+defined('WPR_PAYPAL_VERSION') or define('WPR_PAYPAL_VERSION', "0.0.6");
 defined('WPR_PAYPAL_PREFIX') or define('WPR_PAYPAL_PREFIX', "prefix_");
 defined('WPR_PAYPAL_MAIN_PAGE') or define('WPR_PAYPAL_MAIN_PAGE', "wprelay-paypal");
 

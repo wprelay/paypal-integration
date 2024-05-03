@@ -6,6 +6,7 @@ use PaypalPayoutsSDK\Core\PayPalHttpClient;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;
 use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
 use WPRelay\Paypal\App\Helpers\Functions;
+use WPRelay\Paypal\App\Services\Settings;
 use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
 
@@ -31,9 +32,16 @@ class PayPalClient
      */
     public static function environment()
     {
+        $settings = Settings::get('paypal_settings');
+
+        $paypalSettings = $settings['paypal_settings'];
+
+        $client_id = $paypalSettings['client_id'];
+        $client_secret = $paypalSettings['client_secret'];
         //read from DB.
-        $clientId = 'Af2oeVTK6DcrtRnV94RkaZZc0p7PGn_Z1URWF-v9_vUH50PiXPQ9nQiMjN8DXWg7jFnw2hpkXU1K-6_r';
-        $clientSecret = 'ELhVXNEahnDrwr28T7pDMn9yUNPjBmPlFep61gWPWz3QT87y5bh9ukfe_MNaJiQLB2_f7VlDH2zlm6mS';
+        $clientId = $client_id;
+        $clientSecret = $client_secret;
+
         return new SandboxEnvironment($clientId, $clientSecret);
     }
 

@@ -5,5 +5,4 @@ export type settingsType={
     username:string,
     password:string,
     signature:string,
-    subject:string,
 }

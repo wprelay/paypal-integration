@@ -4,6 +4,7 @@ namespace WPRelay\Paypal\App;
 
 use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
+use WPRelay\Paypal\Src\Models\MassPayout;
 use WPRelay\Paypal\Src\Models\Model;
 use WPRelay\Paypal\Src\Models\WebhookEvent;
 
@@ -88,6 +89,7 @@ class Setup
             BatchPayout::class,
             BatchPayoutItem::class,
             WebhookEvent::class,
+            MassPayout::class,
         ];
     }
 }
