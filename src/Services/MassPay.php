@@ -64,6 +64,7 @@ class MassPay
                 'payout_id' => $item['payout_id'],
                 'affiliate_id' => $item['affiliate_id'],
                 'unique_id' => $item['unique_id'],
+                'status' => 'pending'
             ]);
         }
 
@@ -98,7 +99,7 @@ class MassPay
             $statusword = "success";
 
             if (strpos($ack, $statusword) !== false) {
-                MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id'  => $batch_id]);
+                MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id'  => $batch_id,  'status' => 'processing']);
 
                 return $massPayResponse;
             } else {

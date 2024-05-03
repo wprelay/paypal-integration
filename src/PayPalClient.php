@@ -3,6 +3,7 @@
 namespace WPRelay\Paypal\Src;
 
 use PaypalPayoutsSDK\Core\PayPalHttpClient;
+use PaypalPayoutsSDK\Core\ProductionEnvironment;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;
 use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
 use WPRelay\Paypal\App\Helpers\Functions;
@@ -32,17 +33,22 @@ class PayPalClient
      */
     public static function environment()
     {
-        $settings = Settings::get('paypal_settings');
-
-        $paypalSettings = $settings['paypal_settings'];
+        $paypalSettings = Settings::get('paypal_settings');
 
         $client_id = $paypalSettings['client_id'];
+        $sandbox_mode = $paypalSettings['sandbox_mode'];
         $client_secret = $paypalSettings['client_secret'];
         //read from DB.
         $clientId = $client_id;
         $clientSecret = $client_secret;
 
-        return new SandboxEnvironment($clientId, $clientSecret);
+
+        if ($sandbox_mode) {
+            return new SandboxEnvironment($clientId, $clientSecret);
+        }
+
+        return new ProductionEnvironment($clientId, $clientSecret);
+
     }
 
     public static function processPayout($data)

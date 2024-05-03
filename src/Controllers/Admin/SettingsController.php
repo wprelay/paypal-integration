@@ -15,6 +15,7 @@ class SettingsController
             $settings = json_decode($data, true);
             $settings = $settings['paypal_settings'] ?? [];
 
+            $sandbox_mode = $settings['sandbox_mode'] ?? '';
             $client_secret = $settings['client_secret'] ?? '';
             $client_id = $settings['client_id'] ?? '';
             $payment_via = $settings['payment_via'] ?? '';
@@ -24,9 +25,14 @@ class SettingsController
             $signature= $settings['signature'] ?? '';
 
 
+            $webhook_url = static::getWebhookController();
+            $ipn_notification_url = static::ipnNotificationUrl();
             Response::success([
+                'sandbox_mode' => $sandbox_mode,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
+                'webhook_url' => $webhook_url,
+                'ipn_notification_url' => $ipn_notification_url,
                 'payment_via' => $payment_via,
                 'username'  => $username,
                 'password'  => $password,
@@ -41,6 +47,7 @@ class SettingsController
     public static function saveSettings(Request $request)
     {
         try {
+            $sandbox_mode = $request->get('sandbox_mode');
             $client_id = $request->get('client_id');
             $client_secret = $request->get('client_secret');
             $username = $request->get('username');
@@ -49,6 +56,7 @@ class SettingsController
             $payment_via = $request->get('payment_via');
 
             $settings = [
+                'sandbox_mode' => (bool)$sandbox_mode,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
                 'payment_via' => $payment_via,
@@ -65,5 +73,17 @@ class SettingsController
             PluginHelper::logError('Error Occurred While Processing', [__CLASS__, __FUNCTION__], $exception);
             return Response::error();
         }
+    }
+
+    public static function getWebhookController()
+    {
+        $home_url = home_url();
+       return  $home_url. "/wp-json/webhook/v1/paypal";
+    }
+
+    public static function ipnNotificationUrl()
+    {
+        $home_url = home_url();
+        return  $home_url. "/wp-json/ipn/notifications/paypal";
     }
 }

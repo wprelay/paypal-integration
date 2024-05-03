@@ -15,14 +15,14 @@ import {PaginationTypes} from "../components/types/PaginationTypes";
 import {Badge} from "../components/ui/badge";
 
 type payoutItemEachEntryProp = {
-    receiver_email : string,
-    affiliate_id : string,
-    payout_id : string,
-    currency_code : string,
-    amount : string,
-    status : string,
-    unique_id : string,
-    mass_pay_transaction_id : string,
+    receiver_email: string,
+    affiliate_id: string,
+    payout_id: string,
+    currency_code: string,
+    amount: string,
+    status: string,
+    unique_id: string,
+    mass_pay_transaction_id: string,
 };
 
 type payoutItemProps = PaginationTypes & {
@@ -46,9 +46,9 @@ export const MassPayoutItem = () => {
                 method: 'paypal_mass_payout_item_list',
                 _wp_nonce_key: 'wpr_paypal_nonce',
                 _wp_nonce: localState?.nonces?.wpr_paypal_nonce,
-                search:search,
-                per_page:perPage,
-                current_page:currentPage
+                search: search,
+                per_page: perPage,
+                current_page: currentPage
             },
 
         }).then((response) => {
@@ -62,7 +62,7 @@ export const MassPayoutItem = () => {
 
     React.useEffect(() => {
         getItems();
-    }, [currentPage,perPage])
+    }, [currentPage, perPage])
 
     return <div className='wrp-py-2'>
         <div className='wrp-flex wrp-justify-between wrp-my-4 wrp-mx-5'>
@@ -119,10 +119,13 @@ export const MassPayoutItem = () => {
                             <div className='wrp-flex wrp-flex-col wrp-gap-4'>
                                 <div className='wrp-flex wrp-justify-between wrp-mt-5 wrp-w-full wrp-px-4'>
                                     <div
-                                        className=' wrp-text-grayprimary wrp-font-bold xl:wrp-text-xs md:wrp-text-2.5 wrp-w-1/4 wrp-text-2.5 wrp-uppercase'>Paypal Email
+                                        className=' wrp-text-grayprimary wrp-font-bold xl:wrp-text-xs md:wrp-text-2.5 wrp-w-1/4 wrp-text-2.5 wrp-uppercase'>Paypal
+                                        Email
                                     </div>
                                     <div
-                                        className=' wrp-text-grayprimary wrp-font-bold xl:wrp-text-xs md:wrp-text-2.5 wrp-w-1/4 wrp-text-2.5 wrp-uppercase'>Mass Pay Transaction Id</div>
+                                        className=' wrp-text-grayprimary wrp-font-bold xl:wrp-text-xs md:wrp-text-2.5 wrp-w-1/4 wrp-text-2.5 wrp-uppercase'>Mass
+                                        Pay Transaction Id
+                                    </div>
                                     <div
                                         className=' wrp-text-grayprimary wrp-font-bold xl:wrp-text-xs md:wrp-text-2.5 wrp-w-1/6 wrp-text-2.5 wrp-uppercase'>Amount
                                     </div>
@@ -142,9 +145,9 @@ export const MassPayoutItem = () => {
                                                     <div
                                                         className="wrp-text-primary xl:wrp-text-sm wrp-font-bold lg:wrp-text-xs md:wrp-text-2.5  wrp-text-2.5 wrp-w-1/4 ">#{payout.receiver_email}</div>
                                                     <div
-                                                        className="wrp-text-primary xl:wrp-text-sm wrp-font-bold lg:wrp-text-xs md:wrp-text-2.5  wrp-text-2.5 wrp-w-1/4 ">#{payout.mass_pay_transaction_id}</div>
+                                                        className="wrp-text-primary xl:wrp-text-sm wrp-font-bold lg:wrp-text-xs md:wrp-text-2.5  wrp-text-2.5 wrp-w-1/4 ">{payout.mass_pay_transaction_id ? `#${payout.mass_pay_transaction_id}` : '-'}</div>
                                                     <div
-                                                        className="wrp-text-primary xl:wrp-text-sm wrp-font-bold lg:wrp-text-xs md:wrp-text-2.5  wrp-text-2.5 wrp-w-1/6 ">{payout.amount} {payout.currency_code}</div>
+                                                        className="wrp-text-primary xl:wrp-text-sm wrp-font-bold lg:wrp-text-xs md:wrp-text-2.5  wrp-text-2.5 wrp-w-1/6 ">{payout.amount ? (<span>{payout.amount} {payout.currency_code}</span>) : null}</div>
                                                     <div className='wrp-w-1/7'>
                                                         <Badge
                                                             className={`${payout.status != "Completed" ? 'wrp-bg-red-600 hover:wrp-bg-red-600' : '!wrp-bg-green-600 hover:wrp-bg-green-600'} `}>{payout.status}</Badge>

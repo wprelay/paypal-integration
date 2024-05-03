@@ -11,11 +11,11 @@ class MassPayoutItemCollection extends Collection
             $data[] = [
                 'receiver_email' => $item->receiver_email,
                 'affiliate_id' => $item->affiliate_id,
-                'mass_pay_transaction_id' => $item->masspay_txn_id,
-                'unique_id' => $item->unique_id,
+                'mass_pay_transaction_id' => $item->masspay_txn_id ? $item->masspay_txn_id : null,
+                'unique_id' => $item->unique_id ? $item->unique_id : null,
                 'payout_id' => $item->payout_id,
-                'currency_code' => $item->mc_currency,
-                'amount' => $item->payment_gross,
+                'currency_code' => $item->mc_currency ? $item->mc_currency : null,
+                'amount' => $item->payment_gross ? $item->payment_gross : null,
                 'status' => $item->status,
             ];
         }

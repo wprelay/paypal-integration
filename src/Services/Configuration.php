@@ -9,13 +9,8 @@ class Configuration
 
     public static function getConfig()
     {
+        $mode =
         $config = array(
-            // values: 'sandbox' for testing
-            //		   'live' for production
-            //         'tls' for testing if your server supports TLSv1.2
-            "mode" => "sandbox",
-            // TLSv1.2 Check: Comment the above line, and switch the mode to tls as shown below
-            // "mode" => "tls"
 
             'log.LogEnabled' => false,
             'log.FileName' => '../PayPal.log',
@@ -33,10 +28,10 @@ class Configuration
     {
 
 
-        $settings = Settings::get('paypal_settings');
+        $paypalSettings = Settings::get('paypal_settings');
 
-        $paypalSettings = $settings['paypal_settings'];
-        $userName = $paypalSettings['username'] ?? '';
+        $userName = $paypalSettings['user_name'] ?? '';
+        $mode = $paypalSettings['sandbox_mode'] ?? true;
         $password = $paypalSettings['password'] ?? '';
         $signature = $paypalSettings['signature'] ?? '';
 
@@ -45,6 +40,13 @@ class Configuration
             "acct1.UserName" => $userName,
             "acct1.Password" => $password,
             "acct1.Signature" => $signature,
+            // values: 'sandbox' for testing
+            //		   'live' for production
+            //         'tls' for testing if your server supports TLSv1.2
+            "mode" => $mode,
+            // TLSv1.2 Check: Comment the above line, and switch the mode to tls as shown below
+            // "mode" => "tls"
+
             // Subject is optional and is required only in case of third party authorization
             // "acct1.Subject" => "",
 
