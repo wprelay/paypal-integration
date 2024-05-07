@@ -67,8 +67,9 @@ class PaypalWebhookController
             case 'PAYMENT.PAYOUTS-ITEM.BLOCKED':
             case 'PAYMENT.PAYOUTS-ITEM.REFUNDED':
             case 'PAYMENT.PAYOUTS-ITEM.RETURNED':
-            case 'PAYMENT.PAYOUTS-ITEM.UNCLAIMED':
                 static::payoutItemFailed($data['resource']);
+                break;
+            case 'PAYMENT.PAYOUTS-ITEM.UNCLAIMED':
                 break;
         }
         //handle webhook
