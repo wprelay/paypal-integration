@@ -51,8 +51,6 @@ class Paypal extends RWPPayment
 
     public static function sendPayments($payout_ids)
     {
-        error_log('incoming processing payouts triggered from cron');
-
         $ids = implode("','", $payout_ids);
 
         $memberTable = Member::getTableName();
@@ -83,34 +81,21 @@ class Paypal extends RWPPayment
 
         $payment_via = Settings::get('paypal_settings.payment_via');
 
-        if($payment_via == 'latest') {
+        if ($payment_via == 'latest') {
             $status = PayPalClient::processPayout($data);
-        } else if($payment_via == 'legacy') {
+        } else if ($payment_via == 'legacy') {
             error_log('processing using legacy api');
             $status = MassPay::processPayout($data);
         } else {
             $status = false;
         }
 
-
         if (empty($status)) {
             foreach ($payouts as $payout) {
                 if (in_array($payout->id, $payout_ids)) {
-                    Transaction::create([
-                        'affiliate_id' => $payout->affiliate_id,
-                        'type' => Transaction::CREDIT,
-                        'currency' => $payout->currency,
-                        'amount' => $payout->amount,
-                        'transactionable_id' => $payout->id,
-                        'transactionable_type' => 'payout',
-                        'system_note' => "Payout Failed #{$payout->id} so Refunded",
-
-                    ]);
-
-                    Payout::update(['status' => 'failed'], ['id' => $payout->id]);
+                    do_action('rwp_payment_mark_as_failed', $payout->id, []);
                 }
             }
-
         }
     }
 }

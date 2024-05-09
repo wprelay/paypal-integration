@@ -180,7 +180,7 @@ export const Settings = () => {
                                         <Switch onCheckedChange={(value: any) => {
                                             setSettings({
                                                 ...settings,
-                                                sandbox_mode: !settings.sandbox_mode,
+                                                sandbox_mode: value,
                                             })
                                         }} checked={settings.sandbox_mode}>
                                         </Switch>
