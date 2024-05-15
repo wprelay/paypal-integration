@@ -18,23 +18,25 @@ class PaypalWebhookController
         register_rest_route(
             'webhook/v1',
             '/paypal',
-            array(
-                array(
+            [
+                [
                     'methods' => 'POST',
                     'callback' => [__CLASS__, 'handleWebhook'],
-                ),
-            )
+                    'permission_callback' => '__return_true'
+                ],
+            ]
         );
 
         register_rest_route(
             'ipn/notifications',
             '/paypal',
-            array(
-                array(
+            [
+                [
                     'methods' => 'POST',
                     'callback' => [__CLASS__, 'handleIPNNotifications'],
-                ),
-            )
+                    'permission_callback' => '__return_true'
+                ],
+            ]
         );
 
         error_log('Rest route registered');

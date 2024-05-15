@@ -129,4 +129,41 @@ class PayPalClient
 
         return $data;
     }
+
+    public static function getSupportedCurrencies()
+    {
+        return [
+            'AUD' => 'Australian dollar',
+            'BRL' => 'Brazilian real',
+            'CAD' => 'Canandian dollar',
+            'CNY' => 'Chinese Renmenbi',
+            'CZK' => 'Czech koruna',
+            'DKK' => 'Danish Krone',
+            'EUR' => 'Euro',
+            'HKD' => 'Hong Kong dollar',
+            'HUF' => 'Hungarian Forint',
+            'ILS' => 'Israeli new shekel',
+            'JPY' => 'Japanese Yen',
+            'MYR' => 'Malaysian ringgit',
+            'MXN' => 'Mexican peso',
+            'TWD' => 'New Taiwan dollar',
+            'NZD' => 'New Zealand dollar',
+            'NOK' => 'Norwegian krone',
+            'PHP' => 'Philippine peso',
+            'PLN' => 'Polish zloty',
+            'GBP' => 'Pound sterling',
+            'SGD' => 'Singapore dollar',
+            'SEK' => 'Swedish krona',
+            'CHF' => 'Swiss franc',
+            'THB' => 'Thai baht',
+            'USD' => 'United States dollar'
+        ];
+    }
+
+    public static function isCurrencyAvailableForPayment($code)
+    {
+        $currencies = static::getSupportedCurrencies();
+
+        return in_array($code, array_keys($currencies));
+    }
 }
