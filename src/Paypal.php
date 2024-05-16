@@ -82,18 +82,22 @@ class Paypal extends RWPPayment
         $payment_via = Settings::get('paypal_settings.payment_via');
 
         if ($payment_via == 'latest') {
-            $status = PayPalClient::processPayout($data);
+            [$status, $message] = PayPalClient::processPayout($data);
         } else if ($payment_via == 'legacy') {
-            error_log('processing using legacy api');
-            $status = MassPay::processPayout($data);
+            $status= MassPay::processPayout($data);
         } else {
             $status = false;
         }
 
+
         if (empty($status)) {
             foreach ($payouts as $payout) {
                 if (in_array($payout->id, $payout_ids)) {
-                    do_action('rwp_payment_mark_as_failed', $payout->id, []);
+                    error_log('marking as failure');
+                    if(!isset($message)) {
+                        $message = 'Payout Failed';
+                    }
+                    do_action('rwp_payment_mark_as_failed', $payout->id, ['message' => $message]);
                 }
             }
         }

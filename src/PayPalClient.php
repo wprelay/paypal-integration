@@ -42,17 +42,16 @@ class PayPalClient
         $clientId = $client_id;
         $clientSecret = $client_secret;
 
-
         if ($sandbox_mode) {
             return new SandboxEnvironment($clientId, $clientSecret);
         }
 
         return new ProductionEnvironment($clientId, $clientSecret);
-
     }
 
     public static function processPayout($data)
     {
+        error_log(print_r($data, true));
         $body = static::prepareAndCreatePayoutData($data);
 
         $payoutRequest = new PayoutsPostRequest();
@@ -63,15 +62,15 @@ class PayPalClient
 
         $client->authInjector->inject($payoutRequest);
 
-        $response = $client->execute($payoutRequest);
-
-        $statusCode = $response->statusCode;
-        if ($statusCode >= 200 && $statusCode < 300) {
-            $result = $response->result;
-            return true;
-        } else {
-            return false;
+        try {
+            //receiving response from paypal client is considered as success
+            $response = $client->execute($payoutRequest);
+            return [true, 'Api Succeeded'];
+        } catch (\Exception $exception) {
+            error_log($exception->getMessage());
+            return [false, $exception->getMessage()];
         }
+
     }
 
     public static function prepareAndCreatePayoutData($affiliate_data)
