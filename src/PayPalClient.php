@@ -160,10 +160,11 @@ class PayPalClient
         ];
     }
 
-    public static function isCurrencyAvailableForPayment($code)
+    public static function isCurrencyAvailableForPayment($status, $code)
     {
         $currencies = static::getSupportedCurrencies();
 
+        error_log('Is Paypal Payment is Available');
         return in_array($code, array_keys($currencies));
     }
 }

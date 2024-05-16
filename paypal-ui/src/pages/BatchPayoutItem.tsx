@@ -13,6 +13,7 @@ import usePaginationHook from "../components/customHooks/usePaginationHook";
 import { override } from "../data/overrride";
 import { PaginationTypes } from "../components/types/PaginationTypes";
 import { Badge } from "../components/ui/badge";
+import GoBackButton from "../components/General/GoBack";
 
 type payoutItemEachEntryProp = {
     'amount': string,
@@ -37,18 +38,57 @@ export const BatchPayoutItem = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [statusFilter, setStatusFilter] = useState<{ label: string, value: string }[]>([]);
     const { search, setSearch, searched, setIsSearched } = useInputSearch()
+    const statusOptions = [
+        {
+            'label' : 'Succeeded',
+            'value' : 'SUCCESS'
+        },
+        {
+            'label' : 'Pending',
+            'value' : 'PENDING'
+        },
+        {
+            'label' : 'Unclaimed',
+            'value' : 'UNCLAIMED'
+        },
+        {
+            'label' : 'Denied',
+            'value' : 'DENIED'
+        },
+        {
+            'label' : 'Blocked',
+            'value' : 'BLOCKED'
+        },
+        {
+            'label' : 'Canceled',
+            'value' : 'CANCELED'
+        },
+        {
+            'label' : 'Held',
+            'value' : 'HELD'
+        },
+        {
+            'label' : 'Refunded',
+            'value' : 'REFUNDED'
+        },
+        {
+            'label' : 'Returned',
+            'value' : 'RETURNED'
+        }
+    ];
     const {
         handlePagination, updatePerPage,
         selectedLimit, perPage, currentPage
     } = usePaginationHook();
-    const getItems = () => {
+    const getItems = (searchValue = '') => {
         setLoading(true)
         axiosClient.get('?action=wp_relay_paypal', {
             params: {
                 method: 'paypal_batch_item_list',
                 _wp_nonce_key: 'wpr_paypal_nonce',
                 _wp_nonce: localState?.nonces?.wpr_paypal_nonce,
-                search: search,
+                status: statusFilter.map((i:any) => i.value),
+                search: searchValue,
                 per_page: perPage,
                 current_page: currentPage
             },
@@ -64,7 +104,7 @@ export const BatchPayoutItem = () => {
 
     React.useEffect(() => {
         getItems();
-    }, [currentPage, perPage])
+    }, [currentPage, perPage, statusFilter])
 
     return <div className='wrp-py-2'>
         <div className='wrp-flex wrp-justify-between wrp-my-4 wrp-mx-5'>
@@ -93,7 +133,7 @@ export const BatchPayoutItem = () => {
                         onChange={(selectedOption: any) => {
                             setStatusFilter(selectedOption)
                         }}
-                        // options={[...OrderStatuses.successful, ...OrderStatuses.failure]}
+                        options={statusOptions}
                         defaultValue={statusFilter.length > 0 ? statusFilter : ''}
                     ></Select>
                 </div>
@@ -176,7 +216,10 @@ export const BatchPayoutItem = () => {
                                     }
                                 </div>
                             </div>
-                            <div className='wrp-flex wrp-justify-end wrp-items-center wrp-my-4'>
+                            <div className='wrp-flex wrp-justify-between wrp-items-center wrp-my-4'>
+                                <div>
+                                    <GoBackButton />
+                                </div>
                                 <div className="pagination">
                                     <Pagination handlePageClick={handlePagination} updatePerPage={updatePerPage}
                                         selectedLimit={selectedLimit} pageCount={payoutItems?.total_pages || 1}

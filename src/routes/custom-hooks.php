@@ -1,6 +1,7 @@
 <?php
 
 use WPRelay\Paypal\Src\Paypal;
+use WPRelay\Paypal\Src\PayPalClient;
 
 $store_front_hooks = [
     'actions' => [
@@ -15,7 +16,7 @@ $store_front_hooks = [
 $admin_hooks = [
     'actions' => [],
     'filters' => [
-
+        'wpr_paypal_payment_available_for_currency' => ['callable' => [PayPalClient::class, 'isCurrencyAvailableForPayment'], 'priority' => 11, 'accepted_args' => 2],
     ]
 ];
 

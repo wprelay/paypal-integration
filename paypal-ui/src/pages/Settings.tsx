@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { handleFields } from "../components/helpers/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { Switch } from "../components/ui/switch";
+import GoBackButton from "../components/General/GoBack";
 
 export const Settings = () => {
     const [loading, setLoading] = useState(false);
@@ -426,6 +427,9 @@ export const Settings = () => {
 
                 )
                 }
+                <div className="wrp-py-4 wrp-mx-2">
+                    <GoBackButton />
+                </div>
             </CardContent>
         </Card>
     </div>
