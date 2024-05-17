@@ -63,6 +63,15 @@ if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/packages/paypal-sdk-core-php-main/ven
     error_log('PAYPAL SDK CORE PHP MAIN - Vendor directory is not found');
     return;
 }
+/**
+ * To set plugin is compatible for WC Custom Order Table (HPOS) feature.
+ */
+add_action('before_woocommerce_init', function() {
+    if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
+
 
 if (!function_exists('wpr_check_is_wp_relay_pro_installed')) {
     function wpr_check_is_wp_relay_pro_installed()
