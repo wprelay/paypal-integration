@@ -15,7 +15,7 @@ class Route
 {
     //declare the below constants with unique reference for your plugin
     const AJAX_NAME = 'wp_relay_paypal';
-    const AJAX_NO_PRIV_NAME = 'guest_apis';
+    const AJAX_NO_PRIV_NAME = 'wprelay_paypal_guest_apis';
 
     public static function register()
     {
