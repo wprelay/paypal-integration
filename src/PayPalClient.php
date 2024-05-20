@@ -51,8 +51,7 @@ class PayPalClient
 
     public static function processPayout($data)
     {
-        error_log(print_r($data, true));
-        $body = static::prepareAndCreatePayoutData($data);
+        [$body, $last_batch_id] = static::prepareAndCreatePayoutData($data);
 
         $payoutRequest = new PayoutsPostRequest();
 
@@ -67,10 +66,20 @@ class PayPalClient
             $response = $client->execute($payoutRequest);
             return [true, 'Api Succeeded'];
         } catch (\Exception $exception) {
+
+            BatchPayout::query()->update([
+                'batch_status' => 'DENIED'
+            ], ['id' => $last_batch_id]);
+
+            BatchPayoutItem::query()->update([
+                'transaction_status' => 'CANCELED'
+            ], [
+                'batch_id' => $last_batch_id
+            ]);
             error_log($exception->getMessage());
+
             return [false, $exception->getMessage()];
         }
-
     }
 
     public static function prepareAndCreatePayoutData($affiliate_data)
@@ -126,7 +135,7 @@ class PayPalClient
 
         $data['items'] = $items;
 
-        return $data;
+        return [$data, $last_batch_id];
     }
 
     public static function getSupportedCurrencies()
