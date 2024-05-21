@@ -60,7 +60,8 @@ class ListController
                 })
                 ->when(!empty($search), function ($query) use ($search) {
                     return $query->where("receiver_email LIKE %s OR masspay_txn_id LIKE %s", ["%$search%", "%$search"]);
-                });
+                })
+                ->orderBy('id', 'DESC');
 
             $totalCount = $query->count();
 

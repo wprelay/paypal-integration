@@ -11,10 +11,6 @@ use WPRelay\Paypal\App\Services\Settings;
 use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
 
-ini_set('error_reporting', E_ALL); // or error_reporting(E_ALL);
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-
 class PayPalClient
 {
     /**

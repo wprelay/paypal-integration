@@ -30,7 +30,19 @@ class MassPay
             ];
         }
 
-        return static::pay($payout_data);
+        [$status, $batch_id] = static::pay($payout_data);
+
+        error_log('printing status and batch id');
+        error_log($status);
+        error_log($batch_id);
+
+        if (empty($status)) {
+            MassPayout::query()->update([
+                'status' => 'failed'
+            ], ['custom_batch_id' => $batch_id]);
+        }
+
+        return $status;
     }
 
     public static function pay($data)
@@ -89,7 +101,7 @@ class MassPay
             $massPayResponse = $paypalService->MassPay($massPayReq);
         } catch (\Exception $exception) {
             PluginHelper::logError("Error Occurred while paying mass payment", [__CLASS__, __FUNCTION__], $exception);
-            return false;
+            return [false, $batch_id];
         }
 
         if (isset($massPayResponse)) {
@@ -99,15 +111,14 @@ class MassPay
             $statusword = "success";
 
             if (strpos($ack, $statusword) !== false) {
-                MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id'  => $batch_id,  'status' => 'processing']);
+                MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id' => $batch_id, 'status' => 'processing']);
 
-                return $massPayResponse;
+                return [$massPayResponse, $batch_id];
             } else {
-                return false;
+                return [false, $batch_id];
             }
         } else {
-            error_log('error occurred while mass payment');
-            return false;
+            return [false, $batch_id];
         }
     }
 }
