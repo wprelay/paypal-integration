@@ -72,7 +72,6 @@ class PayPalClient
             ], [
                 'batch_id' => $last_batch_id
             ]);
-            error_log($exception->getMessage());
 
             return [false, $exception->getMessage()];
         }
@@ -168,7 +167,6 @@ class PayPalClient
     {
         $currencies = static::getSupportedCurrencies();
 
-        error_log('Is Paypal Payment is Available');
         return in_array($code, array_keys($currencies));
     }
 }

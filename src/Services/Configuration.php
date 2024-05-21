@@ -9,9 +9,7 @@ class Configuration
 
     public static function getConfig()
     {
-        $mode =
         $config = array(
-
             'log.LogEnabled' => false,
             'log.FileName' => '../PayPal.log',
             'log.LogLevel' => 'FINE'
@@ -26,12 +24,15 @@ class Configuration
     // Creates a configuration array containing credentials and other required configuration parameters.
     public static function getAcctAndConfig()
     {
-
-
         $paypalSettings = Settings::get('paypal_settings');
 
+        $mode = 'sandbox';
+
+        if (isset($paypalSettings['sandbox_mode'])) {
+            $mode = $paypalSettings['sandbox_mode'] ? 'sandbox' : 'production';
+        }
+
         $userName = $paypalSettings['user_name'] ?? '';
-        $mode = $paypalSettings['sandbox_mode'] ?? true;
         $password = $paypalSettings['password'] ?? '';
         $signature = $paypalSettings['signature'] ?? '';
 
@@ -57,7 +58,6 @@ class Configuration
             // "acct1.CertPath" => "cert_key.pem",
             // Subject is optional and is required only in case of third party authorization
             // "acct1.Subject" => "",
-
         );
 
         return array_merge($config, self::getConfig());

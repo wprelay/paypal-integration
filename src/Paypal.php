@@ -93,7 +93,6 @@ class Paypal extends RWPPayment
         if (empty($status)) {
             foreach ($payouts as $payout) {
                 if (in_array($payout->id, $payout_ids)) {
-                    error_log('marking as failure');
                     if(!isset($message)) {
                         $message = 'Payout Failed';
                     }

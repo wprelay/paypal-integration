@@ -52,7 +52,6 @@ class PPAPIService
      */
     public function makeRequest($apiMethod, $request)
     {
-
         $this->apiMethod = $apiMethod;
 
         $httpConfig = new PPHttpConfig(null, PPHttpConfig::HTTP_POST);
@@ -76,7 +75,6 @@ class PPAPIService
 
     private function runHandlers($httpConfig, $request)
     {
-
         $options = $this->getOptions();
         foreach ($this->handlers as $handlerClass) {
             $handlerClass->handle($httpConfig, $request, $options);

@@ -32,10 +32,6 @@ class MassPay
 
         [$status, $batch_id] = static::pay($payout_data);
 
-        error_log('printing status and batch id');
-        error_log($status);
-        error_log($batch_id);
-
         if (empty($status)) {
             MassPayout::query()->update([
                 'status' => 'failed'
@@ -76,7 +72,9 @@ class MassPay
                 'payout_id' => $item['payout_id'],
                 'affiliate_id' => $item['affiliate_id'],
                 'unique_id' => $item['unique_id'],
-                'status' => 'pending'
+                'payment_gross' => $item['amount'],
+                'mc_currency' => $item['currencyCode'],
+                'status' => 'Pending'
             ]);
         }
 
@@ -99,25 +97,23 @@ class MassPay
 
         try {
             $massPayResponse = $paypalService->MassPay($massPayReq);
-        } catch (\Exception $exception) {
-            PluginHelper::logError("Error Occurred while paying mass payment", [__CLASS__, __FUNCTION__], $exception);
-            return [false, $batch_id];
-        }
 
-        if (isset($massPayResponse)) {
-            error_log(print_r($massPayResponse, true));
+            if (isset($massPayResponse)) {
+                $ack = strtolower($massPayResponse['Ack']);
+                $statusword = "success";
 
-            $ack = strtorlower($massPayResponse['Ack']);
-            $statusword = "success";
+                if (strpos($ack, $statusword) !== false) {
+                    MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id' => $batch_id, 'status' => 'processing']);
 
-            if (strpos($ack, $statusword) !== false) {
-                MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id' => $batch_id, 'status' => 'processing']);
-
-                return [$massPayResponse, $batch_id];
+                    return [$massPayResponse, $batch_id];
+                } else {
+                    return [false, $batch_id];
+                }
             } else {
                 return [false, $batch_id];
             }
-        } else {
+        } catch (\Exception $exception) {
+            PluginHelper::logError("Error Occurred while paying mass payment", [__CLASS__, __FUNCTION__], $exception);
             return [false, $batch_id];
         }
     }

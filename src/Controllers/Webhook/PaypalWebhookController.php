@@ -39,8 +39,6 @@ class PaypalWebhookController
             ]
         );
 
-        error_log('Rest route registered');
-
     }
 
     public static function handleWebhook()
@@ -131,9 +129,6 @@ class PaypalWebhookController
 
             $iteration++;
         }
-
-        error_log('Printing IPN Notifications messages');
-        error_log(print_r($data, true));
     }
 
     public static function payoutItemSucceeded($resource)
