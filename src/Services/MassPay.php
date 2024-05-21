@@ -53,8 +53,8 @@ class MassPay
         $massPayRequest = new MassPayRequestType();
         $massPayRequest->MassPayItem = array();
 
-
         $batch_id = Functions::getUniqueId(13);
+
 
         foreach ($data as $item) {
 
@@ -99,13 +99,12 @@ class MassPay
             $massPayResponse = $paypalService->MassPay($massPayReq);
 
             if (isset($massPayResponse)) {
-                $ack = strtolower($massPayResponse['Ack']);
+                $ack = strtolower($massPayResponse->Ack);
                 $statusword = "success";
 
                 if (strpos($ack, $statusword) !== false) {
-                    MassPayout::query()->update(['correlation_id' => $massPayResponse['CorrelationID']], ['custom_batch_id' => $batch_id, 'status' => 'processing']);
-
-                    return [$massPayResponse, $batch_id];
+                    MassPayout::query()->update(['correlation_id' => $massPayResponse->CorrelationID], ['custom_batch_id' => $batch_id, 'status' => 'processing']);
+                    return [true, $batch_id];
                 } else {
                     return [false, $batch_id];
                 }

@@ -121,7 +121,8 @@ abstract class PPXmlMessage
         }
 
         if (($first = reset($map)) && !is_array($first) && !is_numeric(key($map))) {
-            parent::init($map, false);
+//            TODO: COMMENTED BY DEV
+//            parent::init($map, false);
             return;
         }
 
