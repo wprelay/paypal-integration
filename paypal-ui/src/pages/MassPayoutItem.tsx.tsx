@@ -90,6 +90,9 @@ export const MassPayoutItem = () => {
                         className='lg:wrp-text-xl md:wrp-text-lg wrp-text-sm wrp-text-primary wrp-font-bold'>Payout Items</span>
                 </span>
             </div>
+            <div>
+                <GoBackButton />
+            </div>
         </div>
         {!loading ? (<div className="wrp-bg-white wrp-h-full wrp-rounded-2xl wrp-p-4">
             <div className="wrp-flex wrp-flex-row wrp-justify-between wrp-items-center search-section wrp-py-2">
@@ -176,10 +179,7 @@ export const MassPayoutItem = () => {
                                     }
                                 </div>
                             </div>
-                            <div className='wrp-flex wrp-justify-between wrp-items-center wrp-my-4'>
-                                <div>
-                                    <GoBackButton />
-                                </div>
+                            <div className='wrp-flex wrp-justify-end wrp-items-center wrp-my-4'>
                                 <div className="pagination">
                                     <Pagination handlePageClick={handlePagination} updatePerPage={updatePerPage}
                                                 selectedLimit={selectedLimit} pageCount={payoutItems?.total_pages || 1}

@@ -6,11 +6,12 @@ const GoBackButton = () => {
     const navigate = useNavigate();
 
     const goBack = () => {
+        // @ts-ignore
         window.location.href = '?page=wp-relay#/settings' // or navigate('back');
     };
 
     return (
-        <Button onClick={goBack}>
+        <Button onClick={goBack} className="wrp-opacity-50">
             Go Back To WPRelay
         </Button>
     );
