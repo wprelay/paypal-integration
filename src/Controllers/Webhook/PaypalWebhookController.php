@@ -122,8 +122,11 @@ class PaypalWebhookController
                 ], ['id' => $massPayoutEntry->id]);
 
                 //if status is changed update the entry in our DB.
-                if (strtolower($status) == 'completed') {
+                $status = strtolower($status);
+                if ($status == 'completed') {
                     do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
+                } else if(in_array($status, ['failed', 'denied', 'returned', 'refunded', 'blocked', 'canceled']))  {
+                    do_action('rwp_payment_mark_as_failed', $relay_payout_id, ['message' => 'Mass Payout Failed']);
                 }
             }
 
