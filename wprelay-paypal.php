@@ -2,8 +2,8 @@
 
 
 /**
- * Plugin Name:          Paypal - WP Relay
- * Description:          Payment GateWay for WP-Relay
+ * Plugin Name:          WPRelay Paypal
+ * Description:          Payouts Using Paypal for WP-Relay
  * Version:              0.0.6
  * Requires at least:    5.9
  * Requires PHP:         7.3

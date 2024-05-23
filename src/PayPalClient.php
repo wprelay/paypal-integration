@@ -7,6 +7,7 @@ use PaypalPayoutsSDK\Core\ProductionEnvironment;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;
 use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
 use WPRelay\Paypal\App\Helpers\Functions;
+use WPRelay\Paypal\App\Helpers\PluginHelper;
 use WPRelay\Paypal\App\Services\Settings;
 use WPRelay\Paypal\Src\Models\BatchPayout;
 use WPRelay\Paypal\Src\Models\BatchPayoutItem;
@@ -51,18 +52,19 @@ class PayPalClient
 
         $payoutRequest = new PayoutsPostRequest();
 
-        $payoutRequest->body = $body;
-
-        $client = static::client();
-
-        $client->authInjector->inject($payoutRequest);
-
         try {
+            $payoutRequest->body = $body;
+
+            $client = static::client();
+
+            $client->authInjector->inject($payoutRequest);
+
             //receiving response from paypal client is considered as success
             $response = $client->execute($payoutRequest);
             return [true, 'Api Succeeded'];
         } catch (\Exception $exception) {
 
+            PluginHelper::logError('Error Occurred While Processing', [__CLASS__, __FUNCTION__], $exception);
             BatchPayout::query()->update([
                 'batch_status' => 'DENIED'
             ], ['id' => $last_batch_id]);
