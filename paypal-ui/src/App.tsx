@@ -3,7 +3,7 @@ import React, {FC, useState} from 'react';
 import {HashRouter, NavLink, Route, Routes} from "react-router-dom";
 import {Settings} from "./pages/Settings";
 
-import './main.css';
+
 import './styles/navbar.css';
 import {useLocalState} from "./zustand/localState";
 import {toastrError} from "./ToastHelper";
@@ -14,6 +14,7 @@ import AppHeader from "./components/General/AppHeader";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {MassPayoutItem} from "./pages/MassPayoutItem.tsx";
+import './main.css';
 
 const App: FC = (props) => {
     const [loading, setLoading] = React.useState<boolean>(true);

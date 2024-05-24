@@ -7,7 +7,7 @@ const GoBackButton = () => {
 
     const goBack = () => {
         // @ts-ignore
-        window.location.href = '?page=wp-relay#/settings' // or navigate('back');
+        window.location.href = '?page=wp-relay#/settings?settings_tab=payment_settings' // or navigate('back');
     };
 
     return (
