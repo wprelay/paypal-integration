@@ -24,7 +24,7 @@ defined('WPR_PAYPAL_PLUGIN_PATH') or define('WPR_PAYPAL_PLUGIN_PATH', plugin_dir
 defined('WPR_PAYPAL_PLUGIN_URL') or define('WPR_PAYPAL_PLUGIN_URL', plugin_dir_url(__FILE__));
 defined('WPR_PAYPAL_PLUGIN_FILE') or define('WPR_PAYPAL_PLUGIN_FILE', __FILE__);
 defined('WPR_PAYPAL_PLUGIN_NAME') or define('WPR_PAYPAL_PLUGIN_NAME', "WPRelay-Paypal");
-defined('WPR_PAYPAL_PLUGIN_SLUG') or define('WPR_PAYPAL_PLUGIN_SLUG', "WPRelay-Paypal");
+defined('WPR_PAYPAL_PLUGIN_SLUG') or define('WPR_PAYPAL_PLUGIN_SLUG', "wprelay-paypal");
 defined('WPR_PAYPAL_VERSION') or define('WPR_PAYPAL_VERSION', "0.0.6");
 defined('WPR_PAYPAL_PREFIX') or define('WPR_PAYPAL_PREFIX', "prefix_");
 defined('WPR_PAYPAL_MAIN_PAGE') or define('WPR_PAYPAL_MAIN_PAGE', "wprelay-paypal");
@@ -67,7 +67,7 @@ if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/packages/paypal-sdk-core-php-main/ven
 /**
  * To set plugin is compatible for WC Custom Order Table (HPOS) feature.
  */
-add_action('before_woocommerce_init', function() {
+add_action('before_woocommerce_init', function () {
     if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
     }
@@ -83,7 +83,7 @@ if (!function_exists('wpr_check_is_wp_relay_pro_installed')) {
 }
 
 if (function_exists('wpr_check_is_wp_relay_pro_installed')) {
-    if(!wpr_check_is_wp_relay_pro_installed()) {
+    if (!wpr_check_is_wp_relay_pro_installed()) {
         add_action('admin_notices', 'add_wprelay_not_installed_notice');
         error_log('Unable to Processed.  WPRelay Plugin is Not activated');
         return;
@@ -101,6 +101,7 @@ if (class_exists('WPRelay\Paypal\App\App')) {
     $app = \WPRelay\Paypal\App\App::make();
 
     $app->bootstrap(); // to load the plugin
+
 } else {
 //    wp_die('Plugin is unable to find the App class.');
     return;
@@ -109,7 +110,7 @@ if (class_exists('WPRelay\Paypal\App\App')) {
 /**
  * To set plugin is compatible for WC Custom Order Table (HPOS) feature.
  */
-add_action('before_woocommerce_init', function() {
+add_action('before_woocommerce_init', function () {
     if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
     }
@@ -129,12 +130,27 @@ add_action('admin_head', function () {
     }
 }, 11);
 
-function add_wprelay_not_installed_notice() {
+function add_wprelay_not_installed_notice()
+{
     $class = 'notice notice-warning';
     $name = WPR_PAYPAL_PLUGIN_NAME;
-    $message = __( "Error you did not installed the WPRelay Plugin to work with {$name}", 'text-domain' );
-    printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
+    $message = __("Error you did not installed the WPRelay Plugin to work with {$name}", 'text-domain');
+    printf('<div class="%1$s"><p>%2$s</p></div>', $class, $message);
 }
+
+add_action('wprelay_plugin_loaded', function () {
+    if (class_exists('Puc_v4_Factory')) {
+        error_log("paypal release checking");
+        $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
+            'https://github.com/wprelay/paypal-integration',
+            __FILE__,
+            'wprelay-paypal'
+        );
+        $myUpdateChecker->getVcsApi()->enableReleaseAssets();
+    }
+});
+
+
 
 /**
  *Paypal Packages
