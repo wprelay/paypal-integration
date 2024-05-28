@@ -138,7 +138,7 @@ function add_wprelay_not_installed_notice()
     printf('<div class="%1$s"><p>%2$s</p></div>', $class, $message);
 }
 
-add_action('wprelay_plugin_loaded', function () {
+add_action('rwp_after_init', function () {
     if (class_exists('Puc_v4_Factory')) {
         error_log("paypal release checking");
         $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
