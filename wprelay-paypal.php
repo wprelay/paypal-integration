@@ -12,9 +12,10 @@
  * Domain Path:          /i18n/languages
  * License:              GPL v3 or later
  * License URI:          https://www.gnu.org/licenses/gpl-3.0.html
- *
  * WC requires at least: 7.0
  * WC tested up to:      8.1
+ * WPRelay:              1.0.1
+ * WPRelay Page Link:    wprelay-paypal
  */
 
 defined('ABSPATH') or exit;
