@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {Card, CardContent} from "../components/ui/card";
-import {Button} from "../components/ui/button";
-import {ClipLoader} from "react-spinners";
-import {override} from "../data/overrride";
-import {useLocalState} from "../zustand/localState";
-import {axiosClient} from "../components/axios";
-import {toastrError, toastrSuccess} from "../ToastHelper";
-import {UNPROCESSABLE} from "../data/StatusCodes";
-import {settingsType} from "../components/types/settingsType";
-import {Input} from "../components/ui/input"
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../components/ui/select";
-import {handleFields} from "../components/helpers/utils";
-import {Popover, PopoverContent, PopoverTrigger} from "@radix-ui/react-popover";
-import {Switch} from "../components/ui/switch";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { ClipLoader } from "react-spinners";
+import { override } from "../data/overrride";
+import { useLocalState } from "../zustand/localState";
+import { axiosClient } from "../components/axios";
+import { toastrError, toastrSuccess } from "../ToastHelper";
+import { UNPROCESSABLE } from "../data/StatusCodes";
+import { settingsType } from "../components/types/settingsType";
+import { Input } from "../components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import { handleFields } from "../components/helpers/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import { Switch } from "../components/ui/switch";
 import GoBackButton from "../components/General/GoBack";
 
 export const Settings = () => {
     const [loading, setLoading] = useState(false);
     const [saveChangesLoading, setSaveChangesLoading] = useState(false)
-    const {localState} = useLocalState()
+    const { localState } = useLocalState()
     const [errors, setErrors] = useState<any>()
     const [urlCopied, setUrlCopied] = useState<boolean>(false)
     const paymentOptions = [
@@ -50,10 +50,10 @@ export const Settings = () => {
         if (settings.payment_via == "latest") {
             setErrors({})
             if (settings.client_id == '') {
-                setErrors((prevErrors: any) => ({...prevErrors, client_id: ['Client ID is required']}))
+                setErrors((prevErrors: any) => ({ ...prevErrors, client_id: ['Client ID is required'] }))
             }
             if (settings.client_secret == '') {
-                setErrors((prevErrors: any) => ({...prevErrors, client_secret: ['Client Secret key is required']}))
+                setErrors((prevErrors: any) => ({ ...prevErrors, client_secret: ['Client Secret key is required'] }))
             }
             if (settings.client_id == "" || settings.client_secret == "") {
                 setSaveChangesLoading(false)
@@ -63,13 +63,13 @@ export const Settings = () => {
         if (settings.payment_via == "legacy") {
             setErrors({})
             if (settings.username == '') {
-                setErrors((prevErrors: any) => ({...prevErrors, username: ['Username is required']}))
+                setErrors((prevErrors: any) => ({ ...prevErrors, username: ['Username is required'] }))
             }
             if (settings.password == '') {
-                setErrors((prevErrors: any) => ({...prevErrors, password: ['Password is required']}))
+                setErrors((prevErrors: any) => ({ ...prevErrors, password: ['Password is required'] }))
             }
             if (settings.signature == '') {
-                setErrors((prevErrors: any) => ({...prevErrors, signature: ['Signature is required']}))
+                setErrors((prevErrors: any) => ({ ...prevErrors, signature: ['Signature is required'] }))
             }
 
             if (settings.username == "" || settings.password == "" || settings.signature == "") {
@@ -100,14 +100,14 @@ export const Settings = () => {
 
     }
 
-    const copyReferralURL = async (e: any) => {
+    const copyReferralURL = async (url: string) => {
         // @ts-ignore
         if ('clipboard' in navigator) {
             // @ts-ignore
-            await navigator.clipboard.writeText(affiliate.url);
+            await navigator.clipboard.writeText(url);
         } else {
             // @ts-ignore
-            document.execCommand('copy', true, affiliate.url);
+            document.execCommand('copy', true, url);
         }
 
         setUrlCopied(true);
@@ -150,17 +150,17 @@ export const Settings = () => {
             </div>
             <div className="wrp-flex wrp-gap-2">
                 <div>
-                    <GoBackButton/>
+                    <GoBackButton />
                 </div>
                 <div>
-                <Button
-                    onClick={saveSettings}
-                >
-                    {saveChangesLoading && (
-                        <span className="wrp-mx-2"><ClipLoader color="white" cssOverride={override}
-                                                               size={"20px"}/></span>)}
-                    <span>Save Changes</span>
-                </Button>
+                    <Button
+                        onClick={saveSettings}
+                    >
+                        {saveChangesLoading && (
+                            <span className="wrp-mx-2"><ClipLoader color="white" cssOverride={override}
+                                size={"20px"} /></span>)}
+                        <span>Save Changes</span>
+                    </Button>
                 </div>
             </div>
         </div>
@@ -171,7 +171,7 @@ export const Settings = () => {
                     <div className="wrp-w-full wrp-h-96 wrp-flex wrp-flex-row wrp-justify-center wrp-items-center">
                         <div
                         >
-                            <ClipLoader cssOverride={override}/>
+                            <ClipLoader cssOverride={override} />
                         </div>
                     </div>
                 ) : (
@@ -213,12 +213,12 @@ export const Settings = () => {
                                             })
                                         }} defaultValue={settings.payment_via}>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Payment Source"/>
+                                                <SelectValue placeholder="Payment Source" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {paymentOptions?.map((item: any, index: any) => {
                                                     return <SelectItem value={item.value}
-                                                                       key={index}>{item.label}</SelectItem>
+                                                        key={index}>{item.label}</SelectItem>
                                                 })}
                                             </SelectContent>
                                         </Select>
@@ -245,7 +245,7 @@ export const Settings = () => {
                                                             defaultValue={settings.client_id}
                                                             placeholder="Client ID"
                                                             onChange={(e: any) => {
-                                                                setSettings({...handleFields(settings, e.target.value, 'client_id')});
+                                                                setSettings({ ...handleFields(settings, e.target.value, 'client_id') });
                                                             }}
                                                         />
                                                     </div>
@@ -265,13 +265,13 @@ export const Settings = () => {
                                                     className='wrp-flex wrp-flex-col wrp-justify-start wrp-gap-2 wrp-w-full'>
                                                     <div className="wrp-flex wrp-justify-start wrp-gap-0 wrp-w-full">
                                                         <Input id="client_secret"
-                                                               type="text"
-                                                               className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
-                                                               defaultValue={settings?.client_secret}
-                                                               placeholder="Client Secret"
-                                                               onChange={(e: any) => {
-                                                                   setSettings({...handleFields(settings, e.target.value, 'client_secret')});
-                                                               }}
+                                                            type="text"
+                                                            className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
+                                                            defaultValue={settings?.client_secret}
+                                                            placeholder="Client Secret"
+                                                            onChange={(e: any) => {
+                                                                setSettings({ ...handleFields(settings, e.target.value, 'client_secret') });
+                                                            }}
                                                         />
                                                     </div>
                                                 </div>
@@ -300,10 +300,10 @@ export const Settings = () => {
                                                             <i onClick={() => {
                                                                 copyReferralURL(settings.webhook_url)
                                                             }}
-                                                               className='wpr wpr-copy lg:wrp-text-lg wrp-text-4 wrp-cursor-pointer wrp-border wrp-rounded-md wrp-p-2'></i>
+                                                                className='wpr wpr-copy lg:wrp-text-lg wrp-text-4 wrp-cursor-pointer wrp-border wrp-rounded-md wrp-p-2'></i>
                                                         </PopoverTrigger>
                                                         <PopoverContent align='start'
-                                                                        className='!wrp-w-20 wrp-flex !wrp-h-10 wrp-duration-500  '>
+                                                            className='!wrp-w-20 wrp-flex !wrp-h-10 wrp-duration-500  '>
                                                             <p className='wrp-flex wrp-justify-center wrp-items-center'>Copied</p>
                                                         </PopoverContent>
                                                     </Popover>
@@ -330,13 +330,13 @@ export const Settings = () => {
                                                     className='wrp-flex wrp-flex-col wrp-justify-start wrp-gap-2 wrp-w-full'>
                                                     <div className="wrp-flex wrp-justify-start wrp-gap-0 wrp-w-full">
                                                         <Input id="username"
-                                                               type="text"
-                                                               className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
-                                                               defaultValue={settings?.username}
-                                                               placeholder="Username"
-                                                               onChange={(e: any) => {
-                                                                   setSettings({...handleFields(settings, e.target.value, 'username')});
-                                                               }}
+                                                            type="text"
+                                                            className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
+                                                            defaultValue={settings?.username}
+                                                            placeholder="Username"
+                                                            onChange={(e: any) => {
+                                                                setSettings({ ...handleFields(settings, e.target.value, 'username') });
+                                                            }}
                                                         />
                                                     </div>
                                                 </div>
@@ -357,13 +357,13 @@ export const Settings = () => {
                                                     className='wrp-flex wrp-flex-col wrp-justify-start wrp-gap-2 wrp-w-full'>
                                                     <div className="wrp-flex wrp-justify-start wrp-gap-0 wrp-w-full">
                                                         <Input id="password"
-                                                               type="password"
-                                                               className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
-                                                               defaultValue={settings?.password}
-                                                               placeholder="Password"
-                                                               onChange={(e: any) => {
-                                                                   setSettings({...handleFields(settings, e.target.value, 'password')});
-                                                               }}
+                                                            type="password"
+                                                            className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
+                                                            defaultValue={settings?.password}
+                                                            placeholder="Password"
+                                                            onChange={(e: any) => {
+                                                                setSettings({ ...handleFields(settings, e.target.value, 'password') });
+                                                            }}
                                                         />
                                                     </div>
                                                 </div>
@@ -385,13 +385,13 @@ export const Settings = () => {
                                                     className='wrp-flex wrp-flex-col wrp-justify-start wrp-gap-2 wrp-w-full'>
                                                     <div className="wrp-flex wrp-justify-start wrp-gap-0 wrp-w-full">
                                                         <Input id="signature"
-                                                               type="text"
-                                                               className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
-                                                               defaultValue={settings?.signature}
-                                                               placeholder="Signature"
-                                                               onChange={(e: any) => {
-                                                                   setSettings({...handleFields(settings, e.target.value, 'signature')});
-                                                               }}
+                                                            type="text"
+                                                            className='wrp-w-80% wrp-text-primary focus:!wrp-border-none focus:!wrp-shadow-none'
+                                                            defaultValue={settings?.signature}
+                                                            placeholder="Signature"
+                                                            onChange={(e: any) => {
+                                                                setSettings({ ...handleFields(settings, e.target.value, 'signature') });
+                                                            }}
                                                         />
                                                     </div>
                                                 </div>
@@ -420,10 +420,10 @@ export const Settings = () => {
                                                                 <i onClick={() => {
                                                                     copyReferralURL(settings.ipn_notification_url)
                                                                 }}
-                                                                   className='wpr wpr-copy lg:wrp-text-lg wrp-text-4 wrp-cursor-pointer wrp-border wrp-rounded-md wrp-p-2'></i>
+                                                                    className='wpr wpr-copy lg:wrp-text-lg wrp-text-4 wrp-cursor-pointer wrp-border wrp-rounded-md wrp-p-2'></i>
                                                             </PopoverTrigger>
                                                             <PopoverContent align='start'
-                                                                            className='!wrp-w-20 wrp-flex !wrp-h-10 wrp-duration-500  '>
+                                                                className='!wrp-w-20 wrp-flex !wrp-h-10 wrp-duration-500  '>
                                                                 <p className='wrp-flex wrp-justify-center wrp-items-center'>Copied</p>
                                                             </PopoverContent>
                                                         </Popover>
