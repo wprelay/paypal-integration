@@ -36,14 +36,6 @@ if (!defined('WPR_PAYPAL_REQUIRED_PHP_VERSION')) {
     define('WPR_PAYPAL_REQUIRED_PHP_VERSION', 7.2);
 }
 
-$php_version = phpversion();
-
-
-if (version_compare($php_version, WPR_PAYPAL_REQUIRED_PHP_VERSION) > 1) {
-    error_log("Minimum PHP Version Required Is " . WPR_PAYPAL_REQUIRED_PHP_VERSION);
-    return;
-}
-
 if (file_exists(WPR_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php')) {
     require WPR_PAYPAL_PLUGIN_PATH . '/vendor/autoload.php';
 } else {
@@ -78,13 +70,26 @@ if (!function_exists('wpr_check_is_wp_relay_pro_installed')) {
     function wpr_check_is_wp_relay_pro_installed()
     {
         $plugin_path = trailingslashit(WP_PLUGIN_DIR) . 'wprelay-pro/wprelay-pro.php';
-        return in_array($plugin_path, wp_get_active_and_valid_plugins());
+        return in_array($plugin_path, wp_get_active_and_valid_plugins())
+            || (is_multisite() && in_array($plugin_path, wp_get_active_network_plugins()));
     }
 }
 
 if (function_exists('wpr_check_is_wp_relay_pro_installed')) {
     if (!wpr_check_is_wp_relay_pro_installed()) {
-        add_action('admin_notices', 'add_wprelay_not_installed_notice');
+
+        $class = 'notice notice-warning';
+        $name = WPR_PAYPAL_PLUGIN_NAME;
+        $status = 'error';
+        $message = __("Error you did not installed the WPRelay Plugin to work with {$name}", 'text-domain');
+        add_action('admin_notices', function () use ($message, $status) {
+            ?>
+            <div class="notice notice-<?php echo esc_attr($status); ?>">
+                <p><?php echo wp_kses_post($message); ?></p>
+            </div>
+            <?php
+        }, 1);
+
         error_log('Unable to Processed.  WPRelay Plugin is Not activated');
         return;
     }
@@ -130,17 +135,9 @@ add_action('admin_head', function () {
     }
 }, 11);
 
-function add_wprelay_not_installed_notice()
-{
-    $class = 'notice notice-warning';
-    $name = WPR_PAYPAL_PLUGIN_NAME;
-    $message = __("Error you did not installed the WPRelay Plugin to work with {$name}", 'text-domain');
-    printf('<div class="%1$s"><p>%2$s</p></div>', $class, $message);
-}
 
 add_action('rwp_after_init', function () {
     if (class_exists('Puc_v4_Factory')) {
-        error_log("paypal release checking");
         $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
             'https://github.com/wprelay/paypal-integration',
             __FILE__,
