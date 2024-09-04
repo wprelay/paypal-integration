@@ -1,8 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App;
+namespace RelayWP\Paypal\App;
 
-use WPRelay\Paypal\App\Setup;
+use RelayWP\Paypal\App\Setup;
 
 class App extends Container
 {

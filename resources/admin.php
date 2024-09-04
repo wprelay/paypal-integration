@@ -1,6 +1,5 @@
 <div class="wrap">
     <div id="wp-relay-paypal-main">
-        //content rendered from react
     </div>
 
 </div>

@@ -1,8 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Hooks;
+namespace RelayWP\Paypal\App\Hooks;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
 
 class RegisterHooks
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace WPRelay\Paypal\App;
+namespace RelayWP\Paypal\App;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Helpers\WordpressHelper;
-use WPRelay\Paypal\App\Hooks\AdminHooks;
-use WPRelay\Paypal\App\Hooks\AssetsActions;
-use WPRelay\Paypal\App\Hooks\CustomHooks;
-use WPRelay\Paypal\App\Hooks\WPHooks;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Helpers\WordpressHelper;
+use RelayWP\Paypal\App\Hooks\AdminHooks;
+use RelayWP\Paypal\App\Hooks\AssetsActions;
+use RelayWP\Paypal\App\Hooks\CustomHooks;
+use RelayWP\Paypal\App\Hooks\WPHooks;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class Route
 {

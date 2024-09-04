@@ -1,9 +1,9 @@
 <?php
 
-namespace WPRelay\Paypal\App\Resources;
+namespace RelayWP\Paypal\App\Resources;
 
 
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class Collection
 {

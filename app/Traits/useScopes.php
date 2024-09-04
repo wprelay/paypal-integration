@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\App\Traits;
+namespace RelayWP\Paypal\App\Traits;
 
 trait useScopes
 {

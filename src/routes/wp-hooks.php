@@ -1,6 +1,6 @@
 <?php
 
-use WPRelay\Paypal\Src\Controllers\Webhook\PaypalWebhookController;
+use RelayWP\Paypal\Src\Controllers\Webhook\PaypalWebhookController;
 
 $store_front_hooks = [
     'actions' => [

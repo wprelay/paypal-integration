@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Models;
+namespace RelayWP\Paypal\Src\Models;
 
 class BatchPayout extends Model
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services;
+namespace RelayWP\Paypal\App\Services;
 
-use WPRelay\Paypal\App\App;
-use WPRelay\Paypal\App\Helpers\Functions;
+use RelayWP\Paypal\App\App;
+use RelayWP\Paypal\App\Helpers\Functions;
 class View
 {
     public static function instance()

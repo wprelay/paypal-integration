@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\Src;
+namespace RelayWP\Paypal\Src;
 
 use RelayWp\Affiliate\Core\Models\Affiliate;
 use RelayWp\Affiliate\Core\Models\Member;
@@ -8,10 +8,10 @@ use RelayWp\Affiliate\Core\Models\Order;
 use RelayWp\Affiliate\Core\Payments\RWPPayment;
 use RelayWp\Affiliate\Core\Models\Payout;
 use RelayWp\Affiliate\Core\Models\Transaction;
-use WPRelay\Paypal\App\Helpers\Functions;
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Services\Settings;
-use WPRelay\Paypal\Src\Services\MassPay;
+use RelayWP\Paypal\App\Helpers\Functions;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Services\Settings;
+use RelayWP\Paypal\Src\Services\MassPay;
 
 class Paypal extends RWPPayment
 {

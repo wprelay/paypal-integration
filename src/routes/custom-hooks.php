@@ -1,7 +1,7 @@
 <?php
 
-use WPRelay\Paypal\Src\Paypal;
-use WPRelay\Paypal\Src\PayPalClient;
+use RelayWP\Paypal\Src\Paypal;
+use RelayWP\Paypal\Src\PayPalClient;
 
 $store_front_hooks = [
     'actions' => [

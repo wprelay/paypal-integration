@@ -1,10 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Models;
+namespace RelayWP\Paypal\Src\Models;
 
-use WPRelay\Paypal\App\Services\Database;
-use WPRelay\Paypal\App\Traits\Conditionable;
-use WPRelay\Paypal\App\Traits\ForwardCalls;
+use RelayWP\Paypal\App\Services\Database;
+use RelayWP\Paypal\App\Traits\Conditionable;
+use RelayWP\Paypal\App\Traits\ForwardCalls;
 
 abstract class Model
 {

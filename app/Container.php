@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\App;
+namespace RelayWP\Paypal\App;
 class Container
 {
     public $bindings = [];

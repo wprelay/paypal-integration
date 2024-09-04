@@ -1,12 +1,12 @@
 <?php
 
-namespace WPRelay\Paypal\App;
+namespace RelayWP\Paypal\App;
 
-use WPRelay\Paypal\Src\Models\BatchPayout;
-use WPRelay\Paypal\Src\Models\BatchPayoutItem;
-use WPRelay\Paypal\Src\Models\MassPayout;
-use WPRelay\Paypal\Src\Models\Model;
-use WPRelay\Paypal\Src\Models\WebhookEvent;
+use RelayWP\Paypal\Src\Models\BatchPayout;
+use RelayWP\Paypal\Src\Models\BatchPayoutItem;
+use RelayWP\Paypal\Src\Models\MassPayout;
+use RelayWP\Paypal\Src\Models\Model;
+use RelayWP\Paypal\Src\Models\WebhookEvent;
 
 class Setup
 {

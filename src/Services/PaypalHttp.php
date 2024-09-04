@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Services;
+namespace RelayWP\Paypal\Src\Services;
 
 class PaypalHttp
 {

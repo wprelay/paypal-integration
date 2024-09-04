@@ -1,10 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services\Validation;
+namespace RelayWP\Paypal\App\Services\Validation;
 
-use WPRelay\Paypal\App\Services\Database;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Services\Database;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
 use Valitron\Validator;
 
 trait ValidateHelper

@@ -1,10 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Hooks;
+namespace RelayWP\Paypal\App\Hooks;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Helpers\WordpressHelper;
-use WPRelay\Paypal\App\Services\Settings;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Helpers\WordpressHelper;
+use RelayWP\Paypal\App\Services\Settings;
 
 defined('ABSPATH') or exit;
 

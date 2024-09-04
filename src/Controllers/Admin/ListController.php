@@ -1,15 +1,15 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Controllers\Admin;
+namespace RelayWP\Paypal\Src\Controllers\Admin;
 
 use Error;
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Resources\BatchPayoutItemCollection;
-use WPRelay\Paypal\App\Resources\MassPayoutItemCollection;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
-use WPRelay\Paypal\Src\Models\BatchPayoutItem;
-use WPRelay\Paypal\Src\Models\MassPayout;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Resources\BatchPayoutItemCollection;
+use RelayWP\Paypal\App\Resources\MassPayoutItemCollection;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\Src\Models\BatchPayoutItem;
+use RelayWP\Paypal\Src\Models\MassPayout;
 
 class ListController
 {

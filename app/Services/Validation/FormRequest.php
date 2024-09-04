@@ -1,8 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services\Validation;
+namespace RelayWP\Paypal\App\Services\Validation;
 
-use WPRelay\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Request;
 
 interface FormRequest
 {

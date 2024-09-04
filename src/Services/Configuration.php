@@ -1,8 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Services;
+namespace RelayWP\Paypal\Src\Services;
 
-use WPRelay\Paypal\App\Services\Settings;
+use RelayWP\Paypal\App\Services\Settings;
 
 class Configuration
 {

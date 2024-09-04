@@ -1,11 +1,11 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services;
+namespace RelayWP\Paypal\App\Services;
 
-use WPRelay\Paypal\App\Exception\ModelNotFoundException;
-use WPRelay\Paypal\App\Traits\Conditionable;
-use WPRelay\Paypal\App\Traits\useScopes;
-use WPRelay\Paypal\Src\Core\Models\Model;
+use RelayWP\Paypal\App\Exception\ModelNotFoundException;
+use RelayWP\Paypal\App\Traits\Conditionable;
+use RelayWP\Paypal\App\Traits\useScopes;
+use RelayWP\Paypal\Src\Core\Models\Model;
 
 class Database
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\App\Hooks;
+namespace RelayWP\Paypal\App\Hooks;
 
 
 class CustomHooks extends RegisterHooks

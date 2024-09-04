@@ -1,8 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Helpers;
+namespace RelayWP\Paypal\App\Helpers;
 
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class Resource
 {

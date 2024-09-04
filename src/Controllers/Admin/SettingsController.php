@@ -1,10 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Controllers\Admin;
+namespace RelayWP\Paypal\Src\Controllers\Admin;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class SettingsController
 {

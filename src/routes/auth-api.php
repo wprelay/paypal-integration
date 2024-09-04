@@ -1,9 +1,9 @@
 <?php
 
 //All routes actions will be performed in Route::handleAuthRequest method.
-use WPRelay\Paypal\Src\Controllers\Admin\ListController;
-use WPRelay\Paypal\Src\Controllers\Admin\SettingsController;
-use WPRelay\Paypal\Src\Controllers\LocalDataController;
+use RelayWP\Paypal\Src\Controllers\Admin\ListController;
+use RelayWP\Paypal\Src\Controllers\Admin\SettingsController;
+use RelayWP\Paypal\Src\Controllers\LocalDataController;
 
 return [
     'get_local_data' => ['callable' => [LocalDataController::class, 'getLocalData']],

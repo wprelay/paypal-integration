@@ -1,12 +1,12 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Controllers;
+namespace RelayWP\Paypal\Src\Controllers;
 
 use Error;
-use WPRelay\Paypal\App\Helpers\WordpressHelper;
-use WPRelay\Paypal\App\Route;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Helpers\WordpressHelper;
+use RelayWP\Paypal\App\Route;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class LocalDataController
 {

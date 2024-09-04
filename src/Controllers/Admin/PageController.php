@@ -1,7 +1,7 @@
 <?php
-namespace WPRelay\Paypal\Src\Controllers\Admin;
+namespace RelayWP\Paypal\Src\Controllers\Admin;
 
-use WPRelay\Paypal\App\Services\View;
+use RelayWP\Paypal\App\Services\View;
 
 class PageController
 {

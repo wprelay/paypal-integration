@@ -1,6 +1,6 @@
 <?php
 
-namespace WPRelay\Paypal\App\Resources;
+namespace RelayWP\Paypal\App\Resources;
 
 class MassPayoutItemCollection extends Collection
 {

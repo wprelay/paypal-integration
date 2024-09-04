@@ -1,7 +1,7 @@
 <?php
 
 
-namespace WPRelay\Paypal\App\Services\Request;
+namespace RelayWP\Paypal\App\Services\Request;
 class ParameterBag
 {
     /**
