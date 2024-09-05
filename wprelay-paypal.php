@@ -4,7 +4,7 @@
 /**
  * Plugin Name:          RelayWP Paypal
  * Description:          Payouts Using Paypal for RelayWP
- * Version:              0.0.7
+ * Version:              1.0.0
  * Requires at least:    5.9
  * Requires PHP:         7.3
  * Author:               RelayWP * Author URI:           https://www.wprelay.com
@@ -25,9 +25,9 @@ defined('WPR_PAYPAL_PLUGIN_URL') or define('WPR_PAYPAL_PLUGIN_URL', plugin_dir_u
 defined('WPR_PAYPAL_PLUGIN_FILE') or define('WPR_PAYPAL_PLUGIN_FILE', __FILE__);
 defined('WPR_PAYPAL_PLUGIN_NAME') or define('WPR_PAYPAL_PLUGIN_NAME', "RelayWP-Paypal");
 defined('WPR_PAYPAL_PLUGIN_SLUG') or define('WPR_PAYPAL_PLUGIN_SLUG', "relaywp-paypal");
-defined('WPR_PAYPAL_VERSION') or define('WPR_PAYPAL_VERSION', "0.0.7");
+defined('WPR_PAYPAL_VERSION') or define('WPR_PAYPAL_VERSION', "1.0.0");
 defined('WPR_PAYPAL_PREFIX') or define('WPR_PAYPAL_PREFIX', "prefix_");
-defined('WPR_PAYPAL_MAIN_PAGE') or define('WPR_PAYPAL_MAIN_PAGE', "relaywp-paypal");
+defined('WPR_PAYPAL_MAIN_PAGE') or define('WPR_PAYPAL_MAIN_PAGE', "wprelay-paypal");
 
 /**
  * Required PHP Version
@@ -72,7 +72,7 @@ if (defined('WC_VERSION')) {
 if (!function_exists('wpr_check_is_wp_relay_installed')) {
     function wpr_check_is_wp_relay_installed()
     {
-        $plugin_path = trailingslashit(WP_PLUGIN_DIR) . 'relaywp-pro/relaywp-pro.php';
+        $plugin_path = trailingslashit(WP_PLUGIN_DIR) . 'wprelay-pro/wprelay-pro.php';
 
         $core_installed = in_array($plugin_path, wp_get_active_and_valid_plugins())
             || (is_multisite() && in_array($plugin_path, wp_get_active_network_plugins()));
