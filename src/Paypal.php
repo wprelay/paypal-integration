@@ -96,7 +96,7 @@ class Paypal extends RWPPayment
                     if(!isset($message)) {
                         $message = 'Payout Failed';
                     }
-                    do_action('rwp_payment_mark_as_failed', $payout->id, ['message' => $message]);
+                    do_action('rwpa_payment_mark_as_failed', $payout->id, ['message' => $message]);
                 }
             }
         }

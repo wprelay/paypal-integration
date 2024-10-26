@@ -14,8 +14,8 @@
  * License URI:          https://www.gnu.org/licenses/gpl-3.0.html
  * WC requires at least: 7.0
  * WC tested up to:      8.1
- * RelayWP:              1.0.5
- * RelayWP Page Link:    wprelay-paypal
+ * Relay:              1.0.5
+ * Relay Page Link:    wprelay-paypal
  */
 
 defined('ABSPATH') or exit;

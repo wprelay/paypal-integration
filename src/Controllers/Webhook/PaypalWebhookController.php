@@ -124,9 +124,9 @@ class PaypalWebhookController
                 //if status is changed update the entry in our DB.
                 $status = strtolower($status);
                 if ($status == 'completed') {
-                    do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
+                    do_action('rwpa_payment_mark_as_succeeded', $relay_payout_id, []);
                 } else if(in_array($status, ['failed', 'denied', 'returned', 'refunded', 'blocked', 'canceled']))  {
-                    do_action('rwp_payment_mark_as_failed', $relay_payout_id, ['message' => 'Mass Payout Failed']);
+                    do_action('rwpa_payment_mark_as_failed', $relay_payout_id, ['message' => 'Mass Payout Failed']);
                 }
             }
 
@@ -162,7 +162,7 @@ class PaypalWebhookController
 
             $relay_payout_id = $batch_payout_item->affiliate_payout_id;
 
-            do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
+            do_action('rwpa_payment_mark_as_succeeded', $relay_payout_id, []);
         }
 
 
@@ -212,7 +212,7 @@ class PaypalWebhookController
 
                 ]);
 
-                do_action('rwp_payment_mark_as_failed', $relay_payout_id, []);
+                do_action('rwpa_payment_mark_as_failed', $relay_payout_id, []);
             }
         }
     }

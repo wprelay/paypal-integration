@@ -4,6 +4,7 @@ namespace RelayWP\Paypal\App\Services;
 
 use RelayWP\Paypal\App\App;
 use RelayWP\Paypal\App\Helpers\Functions;
+
 class View
 {
     public static function instance()
@@ -18,7 +19,7 @@ class View
 
     public function view($path, $data, $print = true)
     {
-        $file = WPR_PAYPAL_PLUGIN_PATH. 'resources/' . $path . '.php';
+        $file = WPR_PAYPAL_PLUGIN_PATH . 'resources/' . $path . '.php';
         return Functions::renderTemplate($file, $data);
     }
 }

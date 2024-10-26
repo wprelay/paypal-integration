@@ -10,8 +10,8 @@ class Configuration
     public static function getConfig()
     {
         $config = array(
-            'log.LogEnabled' => false,
-            'log.FileName' => '../PayPal.log',
+            'log.LogEnabled' => true,
+            'log.FileName' => RWPA_PLUGIN_PATH.  'PayPal.log',
             'log.LogLevel' => 'FINE'
 
             // These values are defaulted in SDK. If you want to override default values, uncomment it and add your value.
