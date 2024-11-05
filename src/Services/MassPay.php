@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Services;
 
+defined('ABSPATH') or exit;
+
 use PayPal\CoreComponentTypes\BasicAmountType;
 use PayPal\PayPalAPI\MassPayReq;
 use PayPal\PayPalAPI\MassPayRequestItemType;
@@ -117,3 +119,4 @@ class MassPay
         }
     }
 }
+

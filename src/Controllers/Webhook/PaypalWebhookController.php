@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Controllers\Webhook;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Helpers\Functions;
 use RelayWP\Paypal\App\Services\Request\Response;
 use RelayWP\Paypal\Src\Models\BatchPayout;
@@ -38,7 +40,6 @@ class PaypalWebhookController
                 ],
             ]
         );
-
     }
 
     public static function handleWebhook()
@@ -125,7 +126,7 @@ class PaypalWebhookController
                 $status = strtolower($status);
                 if ($status == 'completed') {
                     do_action('rwpa_payment_mark_as_succeeded', $relay_payout_id, []);
-                } else if(in_array($status, ['failed', 'denied', 'returned', 'refunded', 'blocked', 'canceled']))  {
+                } else if (in_array($status, ['failed', 'denied', 'returned', 'refunded', 'blocked', 'canceled'])) {
                     do_action('rwpa_payment_mark_as_failed', $relay_payout_id, ['message' => 'Mass Payout Failed']);
                 }
             }
@@ -164,8 +165,6 @@ class PaypalWebhookController
 
             do_action('rwpa_payment_mark_as_succeeded', $relay_payout_id, []);
         }
-
-
     }
 
     public static function payoutItemFailed($resource)
@@ -262,6 +261,5 @@ class PaypalWebhookController
             ], ['id' => $batch->id]);
         }
     }
-
-
 }
+

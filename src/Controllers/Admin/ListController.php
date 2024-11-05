@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Controllers\Admin;
 
+defined('ABSPATH') or exit;
+
 use Error;
 use RelayWP\Paypal\App\Helpers\PluginHelper;
 use RelayWP\Paypal\App\Resources\BatchPayoutItemCollection;
@@ -39,7 +41,7 @@ class ListController
                 ->get();
 
             BatchPayoutItemCollection::collection([$items, $totalCount, $perPage, $currentPage]);
-        } catch (\Exception|Error $exception) {
+        } catch (\Exception | Error $exception) {
             PluginHelper::logError('Error Occurred While Processing', [__CLASS__, __FUNCTION__], $exception);
             return Response::error();
         }
@@ -70,9 +72,10 @@ class ListController
                 ->get();
 
             MassPayoutItemCollection::collection([$items, $totalCount, $perPage, $currentPage]);
-        } catch (\Exception|Error $exception) {
+        } catch (\Exception | Error $exception) {
             PluginHelper::logError('Error Occurred While Processing', [__CLASS__, __FUNCTION__], $exception);
             return Response::error();
         }
     }
 }
+

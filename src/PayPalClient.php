@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src;
 
+defined('ABSPATH') or exit;
+
 use PaypalPayoutsSDK\Core\PayPalHttpClient;
 use PaypalPayoutsSDK\Core\ProductionEnvironment;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;

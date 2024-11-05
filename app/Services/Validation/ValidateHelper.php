@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Services\Validation;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Services\Database;
 use RelayWP\Paypal\App\Services\Request\Request;
 use RelayWP\Paypal\App\Services\Request\Response;
@@ -23,7 +25,7 @@ trait ValidateHelper
 
         $validator->mapFieldsRules($rules);
 
-//        $validator = $this->mapCustomErrorMessages($validator, $rules, $messages);
+        //        $validator = $this->mapCustomErrorMessages($validator, $rules, $messages);
 
         if (!$validator->validate()) {
             $errors = $validator->errors();
@@ -45,10 +47,7 @@ trait ValidateHelper
         return Request::$validator;
     }
 
-    public function addCustomRules()
-    {
-
-    }
+    public function addCustomRules() {}
 
     public function mapCustomErrorMessages($validator, $rules, $messages)
     {
@@ -76,3 +75,4 @@ trait ValidateHelper
         return false;
     }
 }
+

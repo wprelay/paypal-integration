@@ -1,3 +1,7 @@
+<?php
+defined('ABSPATH') or exit;
+?>
+
 <div class="wrap">
     <div id="wp-relay-paypal-main">
     </div>
@@ -5,8 +9,8 @@
 </div>
 
 <script>
-    jQuery(document).ready(function ($) {
-        $('#wprelay-paypal-form').submit(function (e) {
+    jQuery(document).ready(function($) {
+        $('#wprelay-paypal-form').submit(function(e) {
             e.preventDefault();
             let details = new FormData(this)
             $.ajax({
@@ -15,11 +19,10 @@
                 data: details,
                 processData: false,
                 contentType: false,
-                beforeSend: function () {
+                beforeSend: function() {
 
                 },
-                success: function (response) {
-                }
+                success: function(response) {}
             });
         });
     });

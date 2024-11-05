@@ -1,6 +1,8 @@
 <?php
 
 namespace RelayWP\Paypal\App;
+
+defined('ABSPATH') or exit;
 class Container
 {
     public $bindings = [];
@@ -23,3 +25,4 @@ class Container
         }
     }
 }
+

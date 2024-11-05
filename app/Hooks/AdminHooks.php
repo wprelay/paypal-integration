@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Hooks;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Helpers\PluginHelper;
 use RelayWP\Paypal\Src\Controllers\Admin\PageController;
 
@@ -12,15 +14,9 @@ class AdminHooks extends RegisterHooks
         static::registerHooks('admin-hooks.php');
     }
 
-    public static function init()
-    {
+    public static function init() {}
 
-    }
-
-    public static function head()
-    {
-
-    }
+    public static function head() {}
 
     public static function addMenu()
     {
@@ -35,3 +31,4 @@ class AdminHooks extends RegisterHooks
         );
     }
 }
+

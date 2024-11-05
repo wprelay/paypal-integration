@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Services\Request;
 
+defined('ABSPATH') or exit;
+
 class InputBag extends ParameterBag
 {
 

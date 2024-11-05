@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Resources;
 
+defined('ABSPATH') or exit;
+
 class BatchPayoutItemCollection extends Collection
 {
     public function toArray($items, $totalCount, $perPage, $currentPage)
@@ -30,3 +32,4 @@ class BatchPayoutItemCollection extends Collection
         ];
     }
 }
+

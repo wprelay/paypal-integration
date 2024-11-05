@@ -2,13 +2,12 @@
 
 namespace RelayWP\Paypal\Src;
 
+defined('ABSPATH') or exit;
+
 use RelayWp\Affiliate\Core\Models\Affiliate;
 use RelayWp\Affiliate\Core\Models\Member;
-use RelayWp\Affiliate\Core\Models\Order;
 use RelayWp\Affiliate\Core\Payments\RWPPayment;
 use RelayWp\Affiliate\Core\Models\Payout;
-use RelayWp\Affiliate\Core\Models\Transaction;
-use RelayWP\Paypal\App\Helpers\Functions;
 use RelayWP\Paypal\App\Helpers\PluginHelper;
 use RelayWP\Paypal\App\Services\Settings;
 use RelayWP\Paypal\Src\Services\MassPay;
@@ -84,7 +83,7 @@ class Paypal extends RWPPayment
         if ($payment_via == 'latest') {
             [$status, $message] = PayPalClient::processPayout($data);
         } else if ($payment_via == 'legacy') {
-            $status= MassPay::processPayout($data);
+            $status = MassPay::processPayout($data);
         } else {
             $status = false;
         }
@@ -93,7 +92,7 @@ class Paypal extends RWPPayment
         if (empty($status)) {
             foreach ($payouts as $payout) {
                 if (in_array($payout->id, $payout_ids)) {
-                    if(!isset($message)) {
+                    if (!isset($message)) {
                         $message = 'Payout Failed';
                     }
                     do_action('rwpa_payment_mark_as_failed', $payout->id, ['message' => $message]);
@@ -102,3 +101,4 @@ class Paypal extends RWPPayment
         }
     }
 }
+

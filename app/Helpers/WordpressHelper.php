@@ -3,7 +3,7 @@
 namespace RelayWP\Paypal\App\Helpers;
 
 defined('ABSPATH') or exit;
-defined('ABSPATH') or exit;
+
 class WordpressHelper
 {
 
@@ -66,9 +66,9 @@ class WordpressHelper
     }
 
 
-    public static function generateRandomString($length = 10) {
+    public static function generateRandomString($length = 10)
+    {
 
         return substr(md5(time()), 0, $length);
     }
-
 }

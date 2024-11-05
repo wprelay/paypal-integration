@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Models;
 
+defined('ABSPATH') or exit;
+
 class BatchPayoutItem extends Model
 {
     protected static $table = 'batch_payouts_items';
@@ -35,6 +37,3 @@ class BatchPayoutItem extends Model
                 ) {$charset};";
     }
 }
-
-
-

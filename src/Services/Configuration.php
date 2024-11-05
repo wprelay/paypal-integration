@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Services;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Services\Settings;
 
 class Configuration
@@ -11,7 +13,7 @@ class Configuration
     {
         $config = array(
             'log.LogEnabled' => true,
-            'log.FileName' => RWPA_PLUGIN_PATH.  'PayPal.log',
+            'log.FileName' => RWPA_PLUGIN_PATH .  'PayPal.log',
             'log.LogLevel' => 'FINE'
 
             // These values are defaulted in SDK. If you want to override default values, uncomment it and add your value.
@@ -63,3 +65,4 @@ class Configuration
         return array_merge($config, self::getConfig());
     }
 }
+

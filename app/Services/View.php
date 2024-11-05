@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Services;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\App;
 use RelayWP\Paypal\App\Helpers\Functions;
 

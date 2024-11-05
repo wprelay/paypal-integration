@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Models;
 
+defined('ABSPATH') or exit;
+
 class WebhookEvent extends Model
 {
     protected static $table = 'webhooks';
@@ -24,3 +26,4 @@ class WebhookEvent extends Model
                 ) {$charset};";
     }
 }
+

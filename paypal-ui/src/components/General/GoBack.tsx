@@ -1,20 +1,23 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import {Button} from "../ui/button";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { useLocalState } from "../../zustand/localState";
 
 const GoBackButton = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const goBack = () => {
-        // @ts-ignore
-        window.location.href = '?page=relaywp#/settings?settings_tab=payment_settings' // or navigate('back');
-    };
+  const { localState } = useLocalState();
 
-    return (
-        <Button onClick={goBack} className="wrp-opacity-50">
-            Go Back To WPRelay
-        </Button>
-    );
+  const goBack = () => {
+    // @ts-ignore
+    window.location.href = `?page=${localState.relay_plugin_slug}#settings?settings_tab=payment_settings`; // or navigate('back');
+  };
+
+  return (
+    <Button onClick={goBack} className="wrp-opacity-50">
+      Go Back To WPRelay
+    </Button>
+  );
 };
 
 export default GoBackButton;

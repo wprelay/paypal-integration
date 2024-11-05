@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Hooks;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Helpers\PluginHelper;
 
 class RegisterHooks
@@ -62,3 +64,4 @@ class RegisterHooks
         }
     }
 }
+

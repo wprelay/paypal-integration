@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Setup;
 
 class App extends Container
@@ -24,10 +26,12 @@ class App extends Container
     {
         Setup::init();
         add_action('plugins_loaded', function () {
-            do_action('wpr_paypal_before_init');
+            do_action('rwpa_paypal_before_init');
+
             Route::register();
 
-            do_action('wpr_paypal_after_init');
+            do_action('rwpa_paypal_after_init');
         }, 1);
     }
 }
+

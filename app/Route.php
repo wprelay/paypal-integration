@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Helpers\PluginHelper;
 use RelayWP\Paypal\App\Helpers\WordpressHelper;
 use RelayWP\Paypal\App\Hooks\AdminHooks;
@@ -38,7 +40,7 @@ class Route
 
 
         if ($method != 'get_local_data' && $method != 'playground' && $method != 'new_affiliate_registration' && $method != 'get_wc_states_for_store_front') {
-//            static::verifyNonce($nonce_key, $nonce); // to verify nonce
+            //            static::verifyNonce($nonce_key, $nonce); // to verify nonce
         }
 
         //loading auth routes
@@ -96,5 +98,5 @@ class Route
 
         return wp_send_json_success($response);
     }
-
 }
+

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Plugin Name:          RelayWP Paypal
  * Description:          Payouts Using Paypal for RelayWP
@@ -83,7 +82,6 @@ if (!function_exists('wpr_check_is_wp_relay_installed')) {
             || (is_multisite() && in_array($plugin_path, wp_get_active_network_plugins()));
 
         return $core_installed || $pro_installed;
-
     }
 }
 
@@ -95,11 +93,11 @@ if (function_exists('wpr_check_is_wp_relay_installed')) {
         $status = 'warning';
         $message = __("Error you did not installed the RelayWP Plugin to work with {$name}", 'text-domain');
         add_action('admin_notices', function () use ($message, $status) {
-            ?>
+?>
             <div class="notice notice-<?php echo esc_attr($status); ?>">
                 <p><?php echo wp_kses_post($message); ?></p>
             </div>
-            <?php
+        <?php
         }, 1);
         return;
     }
@@ -117,7 +115,7 @@ if (class_exists('RelayWP\Paypal\App\App')) {
     $app->bootstrap(); // to load the plugin
 
 } else {
-//    wp_die('Plugin is unable to find the App class.');
+    //    wp_die('Plugin is unable to find the App class.');
     return;
 }
 
@@ -136,16 +134,16 @@ add_action('admin_head', function () {
     if (in_array($page, array($main_page_name))) {
         ?>
         <script type="text/javascript">
-            jQuery(document).ready(function ($) {
+            jQuery(document).ready(function($) {
                 self = window;
             });
         </script>
-        <?php
+<?php
     }
 }, 11);
 
 
-add_action('wpr_paypal_after_init', function () {
+add_action('rwpa_paypal_after_init', function () {
     if (class_exists('Puc_v4_Factory')) {
         $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
             'https://github.com/wprelay/paypal-integration',
@@ -162,3 +160,4 @@ add_action('wpr_paypal_after_init', function () {
  *Paypal Packages
  * https://github.com/smashgg/paypal-sdk-core-php
  */
+

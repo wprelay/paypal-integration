@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\Src\Models\BatchPayout;
 use RelayWP\Paypal\Src\Models\BatchPayoutItem;
 use RelayWP\Paypal\Src\Models\MassPayout;
@@ -27,7 +29,7 @@ class Setup
      */
     public static function activate()
     {
-//code
+        //code
     }
 
     /**
@@ -35,16 +37,13 @@ class Setup
      */
     public static function deactivate()
     {
-//        wp_clear_scheduled_hook('rwp_update_affiliate_coupons');
+        //        wp_clear_scheduled_hook('rwp_update_affiliate_coupons');
     }
 
     /**
      * Run plugin activation scripts
      */
-    public static function uninstall()
-    {
-
-    }
+    public static function uninstall() {}
 
     /**
      * Maybe run database migration
@@ -93,3 +92,4 @@ class Setup
         ];
     }
 }
+

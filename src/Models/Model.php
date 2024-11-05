@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\Src\Models;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Services\Database;
 use RelayWP\Paypal\App\Traits\Conditionable;
 use RelayWP\Paypal\App\Traits\ForwardCalls;
@@ -76,3 +78,4 @@ abstract class Model
         return dbDelta($query);
     }
 }
+

@@ -2,6 +2,7 @@
 
 namespace RelayWP\Paypal\App\Services\Request;
 
+defined('ABSPATH') or exit;
 
 use RelayWP\Paypal\App\Helpers\Functions;
 use RelayWP\Paypal\App\Services\Validation\ValidateHelper;
@@ -172,3 +173,4 @@ class Request
         return $value;
     }
 }
+

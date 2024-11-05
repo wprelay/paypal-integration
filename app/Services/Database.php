@@ -2,6 +2,8 @@
 
 namespace RelayWP\Paypal\App\Services;
 
+defined('ABSPATH') or exit;
+
 use RelayWP\Paypal\App\Exception\ModelNotFoundException;
 use RelayWP\Paypal\App\Traits\Conditionable;
 use RelayWP\Paypal\App\Traits\useScopes;
@@ -197,7 +199,6 @@ class Database
         }
 
         return $this->getSingleRow();
-
     }
 
     public function firstOrFail()
@@ -314,7 +315,7 @@ class Database
             case 'get_results':
             case 'update':
             case 'insert':
-            case 'delete' :
+            case 'delete':
                 $errorType = false;
                 break;
         }

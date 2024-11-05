@@ -2,6 +2,7 @@
 
 namespace RelayWP\Paypal\App\Resources;
 
+defined('ABSPATH') or exit;
 
 use RelayWP\Paypal\App\Services\Request\Response;
 
@@ -19,3 +20,4 @@ class Collection
         return $response;
     }
 }
+
