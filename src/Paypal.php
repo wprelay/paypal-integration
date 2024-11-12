@@ -42,7 +42,7 @@ class Paypal extends RWPPayment
     public function process($payout_ids)
     {
         if (\ActionScheduler::is_initialized()) {
-            as_schedule_single_action(strtotime("now"), 'wpr_process_paypal_payouts', [$payout_ids]);
+            as_schedule_single_action(strtotime("now"), 'rwpa_wpr_process_paypal_payouts', [$payout_ids]);
         } else {
             error_log('ActionScheduler not initialized so Unable to process Payouts Via Paypal');
         }
