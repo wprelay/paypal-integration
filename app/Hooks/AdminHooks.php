@@ -21,7 +21,7 @@ class AdminHooks extends RegisterHooks
     public static function addMenu()
     {
         add_submenu_page(
-            null,
+            '',
             esc_html__(WPR_PAYPAL_PLUGIN_NAME, 'wprelay-paypal'),
             esc_html__(WPR_PAYPAL_PLUGIN_NAME, 'wprelay-paypal'),
             'manage_options',
@@ -31,4 +31,3 @@ class AdminHooks extends RegisterHooks
         );
     }
 }
-
