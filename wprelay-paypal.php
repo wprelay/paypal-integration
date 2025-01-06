@@ -76,7 +76,7 @@ if (!function_exists('wpr_check_is_wp_relay_installed')) {
         $pro_installed = in_array($plugin_path, wp_get_active_and_valid_plugins())
             || (is_multisite() && in_array($plugin_path, wp_get_active_network_plugins()));
 
-        $plugin_path = trailingslashit(WP_PLUGIN_DIR) . 'relay-affiliate-marketting/relay-affiliate-marketting.php';
+        $plugin_path = trailingslashit(WP_PLUGIN_DIR) . 'relay-affiliate-marketing/relay-affiliate-marketing.php';
 
         $core_installed = in_array($plugin_path, wp_get_active_and_valid_plugins())
             || (is_multisite() && in_array($plugin_path, wp_get_active_network_plugins()));
