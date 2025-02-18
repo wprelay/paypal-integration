@@ -144,8 +144,8 @@ add_action('admin_head', function () {
 
 
 add_action('rwpa_paypal_after_init', function () {
-    if (class_exists('Puc_v4_Factory')) {
-        $myUpdateChecker = \Puc_v4_Factory::buildUpdateChecker(
+    if (class_exists('YahnisElsts\PluginUpdateChecker\v5\PucFactory')) {
+        $myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
             'https://github.com/wprelay/paypal-integration',
             __FILE__,
             'wprelay-paypal'
