@@ -1,12 +1,14 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Controllers;
+namespace RelayWP\Paypal\Src\Controllers;
+
+defined('ABSPATH') or exit;
 
 use Error;
-use WPRelay\Paypal\App\Helpers\WordpressHelper;
-use WPRelay\Paypal\App\Route;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Helpers\WordpressHelper;
+use RelayWP\Paypal\App\Route;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class LocalDataController
 {
@@ -18,6 +20,7 @@ class LocalDataController
 
             $localData = [
                 'plugin_name' => WPR_PAYPAL_PLUGIN_NAME,
+                'relay_plugin_slug' => RWPA_PLUGIN_SLUG,
                 'user' => [
                     'nick_name' => $currentUserData->user_nicename,
                     'email' => $currentUserData->user_email,
@@ -34,15 +37,15 @@ class LocalDataController
                 'version' => WPR_PAYPAL_VERSION,
             ];
 
-            $localize = apply_filters('wpr_local_data', $localData);
+            $localize = apply_filters('rwpa_paypal_local_data', $localData);
 
             return Response::success($localize);
-        } catch (\Exception|Error $exception) {
+        } catch (\Exception | Error $exception) {
 
             return Response::error([
                 'message' => 'Unable to Fetch the Local Data'
             ]);
         }
     }
-
 }
+

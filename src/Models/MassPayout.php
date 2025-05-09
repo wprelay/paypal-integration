@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Models;
+namespace RelayWP\Paypal\Src\Models;
+
+defined('ABSPATH') or exit;
 
 class MassPayout extends Model
 {
@@ -32,3 +34,4 @@ class MassPayout extends Model
                 ) {$charset};";
     }
 }
+

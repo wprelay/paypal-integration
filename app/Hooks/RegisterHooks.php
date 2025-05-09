@@ -1,8 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Hooks;
+namespace RelayWP\Paypal\App\Hooks;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Helpers\PluginHelper;
 
 class RegisterHooks
 {
@@ -62,3 +64,4 @@ class RegisterHooks
         }
     }
 }
+

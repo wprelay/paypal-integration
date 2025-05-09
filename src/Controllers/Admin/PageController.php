@@ -1,7 +1,10 @@
 <?php
-namespace WPRelay\Paypal\Src\Controllers\Admin;
 
-use WPRelay\Paypal\App\Services\View;
+namespace RelayWP\Paypal\Src\Controllers\Admin;
+
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Services\View;
 
 class PageController
 {
@@ -15,10 +18,7 @@ class PageController
         echo View::render('admin');
     }
 
-    public static function localData()
-    {
-
-    }
+    public static function localData() {}
 
     public static function addAffiliateRole()
     {
@@ -37,3 +37,4 @@ class PageController
         );
     }
 }
+

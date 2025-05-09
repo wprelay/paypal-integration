@@ -1,10 +1,11 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services\Request;
+namespace RelayWP\Paypal\App\Services\Request;
 
+defined('ABSPATH') or exit;
 
-use WPRelay\Paypal\App\Helpers\Functions;
-use WPRelay\Paypal\App\Services\Validation\ValidateHelper;
+use RelayWP\Paypal\App\Helpers\Functions;
+use RelayWP\Paypal\App\Services\Validation\ValidateHelper;
 
 class Request
 {
@@ -172,3 +173,4 @@ class Request
         return $value;
     }
 }
+

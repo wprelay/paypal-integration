@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Resources;
+namespace RelayWP\Paypal\App\Resources;
+
+defined('ABSPATH') or exit;
 
 class MassPayoutItemCollection extends Collection
 {
@@ -29,3 +31,4 @@ class MassPayoutItemCollection extends Collection
         ];
     }
 }
+

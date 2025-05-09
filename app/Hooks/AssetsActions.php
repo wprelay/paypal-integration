@@ -1,10 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Hooks;
+namespace RelayWP\Paypal\App\Hooks;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Helpers\WordpressHelper;
-use WPRelay\Paypal\App\Services\Settings;
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Helpers\PluginHelper;
 
 defined('ABSPATH') or exit;
 
@@ -21,7 +21,7 @@ class AssetsActions
     public static function enqueue()
     {
         add_action('admin_enqueue_scripts', [__CLASS__, 'addAdminPluginAssets']);
-//        add_action('wp_enqueue_scripts', [__CLASS__, 'addStoreFrontScripts']);
+        //        add_action('wp_enqueue_scripts', [__CLASS__, 'addStoreFrontScripts']);
     }
 
     public static function addAdminPluginAssets($hook)
@@ -37,3 +37,4 @@ class AssetsActions
         }
     }
 }
+

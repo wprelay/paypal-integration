@@ -1,16 +1,18 @@
 <?php
 
-namespace WPRelay\Paypal\Src;
+namespace RelayWP\Paypal\Src;
+
+defined('ABSPATH') or exit;
 
 use PaypalPayoutsSDK\Core\PayPalHttpClient;
 use PaypalPayoutsSDK\Core\ProductionEnvironment;
 use PaypalPayoutsSDK\Core\SandboxEnvironment;
 use PaypalPayoutsSDK\Payouts\PayoutsPostRequest;
-use WPRelay\Paypal\App\Helpers\Functions;
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Services\Settings;
-use WPRelay\Paypal\Src\Models\BatchPayout;
-use WPRelay\Paypal\Src\Models\BatchPayoutItem;
+use RelayWP\Paypal\App\Helpers\Functions;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Services\Settings;
+use RelayWP\Paypal\Src\Models\BatchPayout;
+use RelayWP\Paypal\Src\Models\BatchPayoutItem;
 
 class PayPalClient
 {

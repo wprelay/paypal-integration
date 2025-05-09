@@ -1,9 +1,9 @@
 {
-    "name": "wprelay/paypal",
+    "name": "relaywp/paypal",
     "autoload": {
         "psr-4": {
-            "WPRelay\\Paypal\\Src\\": "src/",
-            "WPRelay\\Paypal\\App\\": "app/"
+            "RelayWP\\Paypal\\Src\\": "src/",
+            "RelayWP\\Paypal\\App\\": "app/"
         }
     },
     "require": {

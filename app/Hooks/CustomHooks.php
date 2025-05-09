@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Hooks;
+namespace RelayWP\Paypal\App\Hooks;
+
+defined('ABSPATH') or exit;
 
 
 class CustomHooks extends RegisterHooks
@@ -10,3 +12,4 @@ class CustomHooks extends RegisterHooks
         static::registerHooks('custom-hooks.php');
     }
 }
+

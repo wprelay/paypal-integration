@@ -3,8 +3,7 @@ pack_type=${1:-pro}
 # Print the value of custom argument
 echo "Pack Type: $pack_type"
 
-
-echo "WPRelay Paypal"
+echo "RelayWP Paypal"
 current_dir="$PWD"
 react_folder_path=$current_dir"/paypal-ui"
 
@@ -61,12 +60,9 @@ zip_folder() {
   mkdir -p $pack_compress_folder
   cd "$pack_compress_folder"
 
-
   zip_name="wprelay-paypal"
 
-
-
-  zip -r "$zip_name".zip $zip_name -q 2> zip_error.log
+  zip -r "$zip_name".zip $zip_name -x "*/.*" -q 2> zip_error.log
   echo "Zip Created"
 }
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Traits;
+namespace RelayWP\Paypal\App\Traits;
+
+defined('ABSPATH') or exit;
 
 
 trait Conditionable
@@ -43,3 +45,4 @@ trait Conditionable
         return $this;
     }
 }
+

@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Models;
+namespace RelayWP\Paypal\Src\Models;
+
+defined('ABSPATH') or exit;
 
 class WebhookEvent extends Model
 {
@@ -24,3 +26,4 @@ class WebhookEvent extends Model
                 ) {$charset};";
     }
 }
+

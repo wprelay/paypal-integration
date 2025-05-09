@@ -1,17 +1,16 @@
 <?php
 
-namespace WPRelay\Paypal\Src;
+namespace RelayWP\Paypal\Src;
+
+defined('ABSPATH') or exit;
 
 use RelayWp\Affiliate\Core\Models\Affiliate;
 use RelayWp\Affiliate\Core\Models\Member;
-use RelayWp\Affiliate\Core\Models\Order;
 use RelayWp\Affiliate\Core\Payments\RWPPayment;
 use RelayWp\Affiliate\Core\Models\Payout;
-use RelayWp\Affiliate\Core\Models\Transaction;
-use WPRelay\Paypal\App\Helpers\Functions;
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Services\Settings;
-use WPRelay\Paypal\Src\Services\MassPay;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Services\Settings;
+use RelayWP\Paypal\Src\Services\MassPay;
 
 class Paypal extends RWPPayment
 {
@@ -43,7 +42,7 @@ class Paypal extends RWPPayment
     public function process($payout_ids)
     {
         if (\ActionScheduler::is_initialized()) {
-            as_schedule_single_action(strtotime("now"), 'wpr_process_paypal_payouts', [$payout_ids]);
+            as_schedule_single_action(strtotime("now"), 'rwpa_wpr_process_paypal_payouts', [$payout_ids]);
         } else {
             error_log('ActionScheduler not initialized so Unable to process Payouts Via Paypal');
         }
@@ -84,7 +83,7 @@ class Paypal extends RWPPayment
         if ($payment_via == 'latest') {
             [$status, $message] = PayPalClient::processPayout($data);
         } else if ($payment_via == 'legacy') {
-            $status= MassPay::processPayout($data);
+            $status = MassPay::processPayout($data);
         } else {
             $status = false;
         }
@@ -93,12 +92,13 @@ class Paypal extends RWPPayment
         if (empty($status)) {
             foreach ($payouts as $payout) {
                 if (in_array($payout->id, $payout_ids)) {
-                    if(!isset($message)) {
+                    if (!isset($message)) {
                         $message = 'Payout Failed';
                     }
-                    do_action('rwp_payment_mark_as_failed', $payout->id, ['message' => $message]);
+                    do_action('rwpa_payment_mark_as_failed', $payout->id, ['message' => $message]);
                 }
             }
         }
     }
 }
+

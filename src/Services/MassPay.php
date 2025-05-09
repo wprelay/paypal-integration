@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Services;
+namespace RelayWP\Paypal\Src\Services;
+
+defined('ABSPATH') or exit;
 
 use PayPal\CoreComponentTypes\BasicAmountType;
 use PayPal\PayPalAPI\MassPayReq;
@@ -9,9 +11,9 @@ use PayPal\PayPalAPI\MassPayRequestType;
 use PayPal\Service\PayPalAPIInterfaceServiceService;
 use PayPal\Auth\PPSignatureCredential;
 use PayPal\Auth\PPTokenAuthorization;
-use WPRelay\Paypal\App\Helpers\Functions;
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\Src\Models\MassPayout;
+use RelayWP\Paypal\App\Helpers\Functions;
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\Src\Models\MassPayout;
 
 class MassPay
 {
@@ -117,3 +119,4 @@ class MassPay
         }
     }
 }
+

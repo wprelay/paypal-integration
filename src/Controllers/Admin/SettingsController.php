@@ -1,10 +1,12 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Controllers\Admin;
+namespace RelayWP\Paypal\Src\Controllers\Admin;
 
-use WPRelay\Paypal\App\Helpers\PluginHelper;
-use WPRelay\Paypal\App\Services\Request\Request;
-use WPRelay\Paypal\App\Services\Request\Response;
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Helpers\PluginHelper;
+use RelayWP\Paypal\App\Services\Request\Request;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class SettingsController
 {
@@ -20,9 +22,9 @@ class SettingsController
             $client_id = $settings['client_id'] ?? '';
             $payment_via = $settings['payment_via'] ?? '';
 
-            $username= $settings['user_name'] ?? '';
-            $password= $settings['password'] ?? '';
-            $signature= $settings['signature'] ?? '';
+            $username = $settings['user_name'] ?? '';
+            $password = $settings['password'] ?? '';
+            $signature = $settings['signature'] ?? '';
 
 
             $webhook_url = static::getWebhookController();
@@ -38,7 +40,7 @@ class SettingsController
                 'password'  => $password,
                 'signature'  => $signature,
             ]);
-        } catch (\Exception|\Error $exception) {
+        } catch (\Exception | \Error $exception) {
             PluginHelper::logError('Error Occurred While Processing', [__CLASS__, __FUNCTION__], $exception);
             return Response::error();
         }
@@ -68,8 +70,7 @@ class SettingsController
             $settings = json_encode(['paypal_settings' => $settings]);
 
             update_option('wpr_paypal_settings', $settings);
-
-        } catch (\Exception|\Error $exception) {
+        } catch (\Exception | \Error $exception) {
             PluginHelper::logError('Error Occurred While Processing', [__CLASS__, __FUNCTION__], $exception);
             return Response::error();
         }
@@ -78,12 +79,13 @@ class SettingsController
     public static function getWebhookController()
     {
         $home_url = home_url();
-       return  $home_url. "/wp-json/webhook/v1/paypal";
+        return  $home_url . "/wp-json/webhook/v1/paypal";
     }
 
     public static function ipnNotificationUrl()
     {
         $home_url = home_url();
-        return  $home_url. "/wp-json/ipn/notifications/paypal";
+        return  $home_url . "/wp-json/ipn/notifications/paypal";
     }
 }
+

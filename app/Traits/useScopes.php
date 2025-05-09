@@ -1,6 +1,8 @@
 <?php
 
-namespace WPRelay\Paypal\App\Traits;
+namespace RelayWP\Paypal\App\Traits;
+
+defined('ABSPATH') or exit;
 
 trait useScopes
 {
@@ -29,6 +31,6 @@ trait useScopes
         }
 
         return $query->orWhere("$column LIKE %s", ["%{$value}%"]);
-
     }
 }
+

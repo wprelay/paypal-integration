@@ -1,8 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services;
+namespace RelayWP\Paypal\App\Services;
 
-use WPRelay\Paypal\App\Helpers\Functions;
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Helpers\Functions;
 
 class Settings
 {
@@ -22,6 +24,5 @@ class Settings
         $wpr_settings = get_option('wpr_paypal_settings', '[]');
 
         return json_decode($wpr_settings, true);
-
     }
 }

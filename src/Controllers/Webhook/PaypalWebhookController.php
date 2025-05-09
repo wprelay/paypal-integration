@@ -1,13 +1,15 @@
 <?php
 
-namespace WPRelay\Paypal\Src\Controllers\Webhook;
+namespace RelayWP\Paypal\Src\Controllers\Webhook;
 
-use WPRelay\Paypal\App\Helpers\Functions;
-use WPRelay\Paypal\App\Services\Request\Response;
-use WPRelay\Paypal\Src\Models\BatchPayout;
-use WPRelay\Paypal\Src\Models\BatchPayoutItem;
-use WPRelay\Paypal\Src\Models\MassPayout;
-use WPRelay\Paypal\Src\Models\WebhookEvent;
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Helpers\Functions;
+use RelayWP\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\Src\Models\BatchPayout;
+use RelayWP\Paypal\Src\Models\BatchPayoutItem;
+use RelayWP\Paypal\Src\Models\MassPayout;
+use RelayWP\Paypal\Src\Models\WebhookEvent;
 use RelayWp\Affiliate\Core\Models\Payout;
 use RelayWp\Affiliate\Core\Models\Transaction;
 
@@ -38,7 +40,6 @@ class PaypalWebhookController
                 ],
             ]
         );
-
     }
 
     public static function handleWebhook()
@@ -124,9 +125,9 @@ class PaypalWebhookController
                 //if status is changed update the entry in our DB.
                 $status = strtolower($status);
                 if ($status == 'completed') {
-                    do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
-                } else if(in_array($status, ['failed', 'denied', 'returned', 'refunded', 'blocked', 'canceled']))  {
-                    do_action('rwp_payment_mark_as_failed', $relay_payout_id, ['message' => 'Mass Payout Failed']);
+                    do_action('rwpa_payment_mark_as_succeeded', $relay_payout_id, []);
+                } else if (in_array($status, ['failed', 'denied', 'returned', 'refunded', 'blocked', 'canceled'])) {
+                    do_action('rwpa_payment_mark_as_failed', $relay_payout_id, ['message' => 'Mass Payout Failed']);
                 }
             }
 
@@ -162,10 +163,8 @@ class PaypalWebhookController
 
             $relay_payout_id = $batch_payout_item->affiliate_payout_id;
 
-            do_action('rwp_payment_mark_as_succeeded', $relay_payout_id, []);
+            do_action('rwpa_payment_mark_as_succeeded', $relay_payout_id, []);
         }
-
-
     }
 
     public static function payoutItemFailed($resource)
@@ -212,7 +211,7 @@ class PaypalWebhookController
 
                 ]);
 
-                do_action('rwp_payment_mark_as_failed', $relay_payout_id, []);
+                do_action('rwpa_payment_mark_as_failed', $relay_payout_id, []);
             }
         }
     }
@@ -262,6 +261,5 @@ class PaypalWebhookController
             ], ['id' => $batch->id]);
         }
     }
-
-
 }
+

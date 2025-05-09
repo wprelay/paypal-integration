@@ -1,9 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Resources;
+namespace RelayWP\Paypal\App\Resources;
 
+defined('ABSPATH') or exit;
 
-use WPRelay\Paypal\App\Services\Request\Response;
+use RelayWP\Paypal\App\Services\Request\Response;
 
 class Collection
 {
@@ -19,3 +20,4 @@ class Collection
         return $response;
     }
 }
+

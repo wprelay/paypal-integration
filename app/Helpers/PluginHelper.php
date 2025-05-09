@@ -1,10 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Helpers;
-
-use Exception;
+namespace RelayWP\Paypal\App\Helpers;
 
 defined('ABSPATH') or exit;
+
+use Exception;
 
 class PluginHelper
 {
@@ -55,5 +55,5 @@ class PluginHelper
         $unique_id = Functions::getUniqueId();
         return "pid-{$payout_id}-$unique_id";
     }
-
 }
+

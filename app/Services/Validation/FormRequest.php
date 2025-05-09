@@ -1,8 +1,10 @@
 <?php
 
-namespace WPRelay\Paypal\App\Services\Validation;
+namespace RelayWP\Paypal\App\Services\Validation;
 
-use WPRelay\Paypal\App\Services\Request\Request;
+defined('ABSPATH') or exit;
+
+use RelayWP\Paypal\App\Services\Request\Request;
 
 interface FormRequest
 {
@@ -10,3 +12,4 @@ interface FormRequest
 
     public function messages(): array;
 }
+
